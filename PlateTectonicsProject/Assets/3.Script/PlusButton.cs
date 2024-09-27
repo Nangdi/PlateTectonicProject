@@ -16,11 +16,21 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         ClickButton
 
     }
+    //지각에 따른 상호작용 방법 수렴 = closer 발산 = Apart
+    public enum HandAction
+    {
+        ZoomOut,     // 손과 손이 가까워질 때
+        ZoomIn,      // 손과 손이 멀어질 때
+        HandsMoveUpDown,    // 손이 위아래로 멀어질때
+
+    }
+    public HandAction handAction;
     public ButtonState state;
     public GameObject nameUI;
     public GameObject ExplanationUI;
     public List<LeapMouseCursor> players = new List<LeapMouseCursor>();
     public LeapMouseCursor currentCursor;
+    public RawImage video;
     private void OnEnable()
     {
         //state = ButtonState.Idle;
@@ -89,19 +99,26 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         currentCursor = eventData.pointerClick.GetComponent<LeapMouseCursor>();
         if (currentCursor.lastbtn != this)
         {
+            //기존에 보던 패널이 있다면
             if (currentCursor.lastbtn != null )
             {
+                //기존설명패널 닫기
                 currentCursor.lastbtn.CloseExplanationUI();
             }
             //버튼스크립트에 설명패널 Active 키는 메소드 만든후 추가
 
-            currentCursor.lastbtn = this;
-
-            OpenExplanationUI(); // 설명패널키는 메소드
-                                 //이전버튼의 players에서 나를 지워줘야함
-            currentCursor.UpdateCursorState(ActionState.Select);
+           
         }
-     
+        currentCursor.lastbtn = this;
+
+        OpenExplanationUI(); // 설명패널키는 메소드
+                             //이전버튼의 players에서 나를 지워줘야함
+        currentCursor.UpdateCursorState(ActionState.Select);
+
+    }
+    public void PlaySimulator()
+    {
+        ExplanationUI.GetComponent<ExplanationPanel>().Play();
     }
     private void OnDisable()
     {

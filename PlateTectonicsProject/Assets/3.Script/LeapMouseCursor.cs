@@ -9,6 +9,8 @@ using System;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using LeapInternal;
+using UnityEngine.InputSystem.Controls;
 
 public enum ActionState {
     Idle = 0,
@@ -37,7 +39,8 @@ public class LeapMouseCursor : MonoBehaviour
     public LeapServiceProvider leapServiceProvider;
     public int mouseSensitivity= 3000;
     public float lerpSpeed = 10f;
-
+    public float OffTime =10f;
+    public float timer;
     public ActionState actionState;
     public GameObject cursorObject;
     private RectTransform cursorRect;
@@ -45,7 +48,15 @@ public class LeapMouseCursor : MonoBehaviour
     private GameObject lastObject;
     public PlusButton lastbtn;
     public GuidePanel gudie;
-
+    private float previousDistance;
+    private float previousYDistance;
+    private float waitTime = 1.0f;
+    private bool IsHandsInitialized;
+    public float distanceThreshold = 0.003f;
+    private void OnEnable()
+    {
+        timer = 0f;
+    }
     void Start()
     {
 
@@ -70,12 +81,79 @@ public class LeapMouseCursor : MonoBehaviour
             //손위치와 게임씬의 mouseObject 매핑
             MapHandToCursor(hand);
             RaycastUI(hand);
+            if (actionState == ActionState.Select && frame.Hands.Count == 2 && !IsHandsInitialized)
+            {
+                // 손이 처음 인식되면 유예 시간을 시작
+                StartCoroutine(InitializeHands(frame.Hands[0], frame.Hands[1]));
+            }
+            //Btn 클릭후 손이 두개인식 됐을때
+            if (actionState == ActionState.Select && frame.Hands.Count== 2 && IsHandsInitialized)
+            {
+                Hand leftHand = frame.Hands[0];
+                Hand rightHand = hand;
+
+                //두손바닥의 위치
+                Vector3 leftHandPosition = leftHand.PalmPosition;
+                Vector3 rightHandPosition = rightHand.PalmPosition;
+                // 두 손 사이의 거리 계산
+                float currentDistance = Vector3.Distance(leftHandPosition, rightHandPosition);
+                float currentYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);
+                // 이전 거리와 현재 거리를 비교하여 손이 멀어졌는지 판단
+
+                switch (lastbtn.handAction)
+                {
+                    case PlusButton.HandAction.ZoomOut: //손이 가까워질때 : 수렴
+                        if (currentDistance - previousDistance < -distanceThreshold)
+                        {
+                            //두손이 가까워질때 실행되는 곳
+                            Debug.Log("수렴형 경계 : 손이 가까워짐");
+                            SimulationPlay();
+                        }
+                        break;
+                    case PlusButton.HandAction.ZoomIn: //손이멀어질때 : 발산
+                        if (currentDistance - previousDistance > distanceThreshold)
+                        {
+                            Debug.Log("발산형 경계 : 손이 멀어짐");
+                            SimulationPlay();
+                            // 여기에 두 손이 멀어졌을 때 실행할 동작 추가 
+                        }
+                        break;
+                    case PlusButton.HandAction.HandsMoveUpDown:  //손이위아래로멀어질때 : 보존
+                        if (currentYDistance - previousYDistance > distanceThreshold)
+                        {
+                            //양손이 위아래로 거리가 벌려질때
+                            Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
+                            SimulationPlay();
+                        }
+                        break;
+                }
+                
+                
+            
+
+                // 현재 거리를 이전 거리로 업데이트
+                previousDistance = currentDistance;
+
+            }
+            else
+            {
+                IsHandsInitialized = false;
+            }
 
 
 
 
-
-
+        }
+        else
+        {
+            //손이감지되지 않을시 일정시간이 흐른후 state를 Off로 바꿔서 모든 요소를 초기화한다.
+            //켜놓은 패널 , 플레이어 가이드멘트 , 
+            timer += Time.deltaTime;
+            if (timer > OffTime)
+            {
+                UpdateCursorState(ActionState.Off);
+                gameObject.SetActive(false);
+            }
 
         }
 
@@ -92,6 +170,7 @@ public class LeapMouseCursor : MonoBehaviour
         int mouseX = (int)Mathf.Clamp(handPosition.x * mouseSensitivity, -Screen.width / 2, Screen.width / 2);
         int mouseY = (int)Mathf.Clamp((handPosition.y - 0.2f) * mouseSensitivity, -Screen.height / 2, Screen.height / 2);
         //Debug.Log("mouse" + mouseX + ", " + mouseY);
+        //Debug.Log("handPositon : " + handPosition);
 
         //마우스 손떨림때문에 Lerp 사용
         cursorRect.anchoredPosition = Vector2.Lerp(
@@ -184,5 +263,23 @@ public class LeapMouseCursor : MonoBehaviour
         actionState = state;
         gudie.UpdateGuideText();
         Debug.Log("텍스트업데이트");
+    }
+
+    IEnumerator InitializeHands(Hand leftHand, Hand rightHand)
+    {
+        yield return new WaitForSeconds(waitTime);  // 1초 대기
+
+        // 두 손의 첫 번째 거리 계산 (유예 시간 후)
+        Vector3 leftHandPosition = leftHand.PalmPosition;
+        Vector3 rightHandPosition = rightHand.PalmPosition;
+        previousDistance = Vector3.Distance(leftHandPosition, rightHandPosition);
+        previousYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);
+        IsHandsInitialized = true;
+    }
+    public void SimulationPlay()
+    {
+        UpdateCursorState(ActionState.playback);
+        IsHandsInitialized = false;
+        lastbtn.PlaySimulator();
     }
 }

@@ -25,6 +25,9 @@ public class GuidePanel : MonoBehaviour
             case ActionState.Select:
                 text.text = "시뮬레이션을 실행해보세요";
                 break;
+            case ActionState.Off:
+                text.text = "에어제스처에 손을 넣어 체험해보세요";
+                break;
         }
     }
 }
