@@ -35,7 +35,6 @@ public class ExplanationPanel : MonoBehaviour
     }
     private void OnDisable()
     {
-        Debug.Log("¼³¸íÆÇ³Ú ´ÝÈû");
         videoPanel.gameObject.SetActive(false);
         btn.currentCursor.UpdateCursorState(ActionState.Idle);
         IsPlay = false;

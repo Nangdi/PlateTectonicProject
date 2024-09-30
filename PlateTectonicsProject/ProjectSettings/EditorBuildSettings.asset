@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/1.Scene/PlateTectonics.unity
+    guid: 3469772de10416942b5f7a74970cf506
   m_configObjects: {}

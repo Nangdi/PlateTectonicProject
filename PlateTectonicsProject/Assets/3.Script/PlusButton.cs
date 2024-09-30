@@ -42,13 +42,13 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             case ButtonState.Idle:
                 if (nameUI.activeSelf)
                 {
-                    CloseNameUI();
+                    SetNameUI(false);
                 }
                 break;
             case ButtonState.OntheMouse:
                 if (!nameUI.activeSelf)
                 {
-                    OpenNameUI();
+                    SetNameUI(true);
                 }
                 break;
             case ButtonState.ClickButton:
@@ -62,23 +62,14 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
    //영상이나 시뮬레이션을 재생하지 않았을때? .. 고민
 
     
-    public void OpenNameUI()
+    public void SetNameUI(bool active)
     {
-        nameUI.SetActive(true);
+        nameUI.SetActive(active);
     }
-    public void CloseNameUI()
+    public void SetExplanationUI(bool active)
     {
-        nameUI.SetActive(false);
+        ExplanationUI.SetActive(active);
     }
-    public void OpenExplanationUI()
-    {
-        ExplanationUI.SetActive(true);
-    }
-    public void CloseExplanationUI()
-    {
-        ExplanationUI.SetActive(false);
-    }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         state = ButtonState.OntheMouse;
@@ -95,7 +86,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             Debug.Log("이미활성화된 버튼입니다.");
             return;
         }
-        Debug.Log("버튼감지");
+        Debug.Log("시뮬레이션 실행 방법 :  " + handAction);
         currentCursor = eventData.pointerClick.GetComponent<LeapMouseCursor>();
         if (currentCursor.lastbtn != this)
         {
@@ -103,7 +94,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             if (currentCursor.lastbtn != null )
             {
                 //기존설명패널 닫기
-                currentCursor.lastbtn.CloseExplanationUI();
+                currentCursor.lastbtn.SetExplanationUI(false);
             }
             //버튼스크립트에 설명패널 Active 키는 메소드 만든후 추가
 
@@ -111,7 +102,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
         currentCursor.lastbtn = this;
 
-        OpenExplanationUI(); // 설명패널키는 메소드
+        SetExplanationUI(true); // 설명패널키는 메소드
                              //이전버튼의 players에서 나를 지워줘야함
         currentCursor.UpdateCursorState(ActionState.Select);
 
