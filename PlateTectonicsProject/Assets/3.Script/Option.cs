@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Option : MonoBehaviour
 {
@@ -10,12 +11,25 @@ public class Option : MonoBehaviour
     [SerializeField]
     private LeapMouseCursor player2_cursor;
 
-    public float mouseSensitivity = 0.5f;
-    public float distanceThreshold = 0.003f;
-    public float handHeight = 0.3f;
-    public float handStability = 0.5f;
+    [SerializeField]
+    private Scrollbar motionSensitivityBar;
+    [SerializeField]
+    private Scrollbar handHeightBar;
+    [SerializeField]
+    private Scrollbar handStabilityBar;
+
+
+    
+    public void SetHandHeight()
+    {
+        player1_cursor.handHeight = player2_cursor.handHeight = handHeightBar.value;
+    }
     public void SetMotionSensitivity()
     {
-
+        player1_cursor.motionSensitivity = player2_cursor.motionSensitivity = motionSensitivityBar.value;
+    }
+    public void SetHandStability()
+    {
+        player1_cursor.mouseSpeed = player2_cursor.mouseSpeed = handStabilityBar.value;
     }
 }

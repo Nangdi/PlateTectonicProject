@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Lumin;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class ExplanationPanel : MonoBehaviour
 {
-   
+    [SerializeField]
     private PlusButton btn;
-    public RawImage videoPanel;
+    public GameObject videoPanel;
+    public VideoPlayer VideoPlayer;
     private float timer = 0f;
     private float playerTime = 5f;
     private bool IsPlay;
 
-    private void Awake()
-    {
-        transform.parent.TryGetComponent<PlusButton>(out btn);
-    }
     //private void OnEnable()
     //{
     //    IsPlay = false;
@@ -28,6 +26,8 @@ public class ExplanationPanel : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= playerTime)
             {
+                VideoPlayer.time = 0f;
+                videoPanel.SetActive(false);
                 gameObject.SetActive(false);
             }
 
