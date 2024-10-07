@@ -12,7 +12,7 @@ public class ExplanationPanel : MonoBehaviour
     public GameObject videoPanel;
     public VideoPlayer VideoPlayer;
     private float timer = 0f;
-    private float playerTime = 5f;
+    private float playerTime = 10f;
     private bool IsPlay;
 
     //private void OnEnable()
@@ -27,6 +27,8 @@ public class ExplanationPanel : MonoBehaviour
             if (timer >= playerTime)
             {
                 VideoPlayer.time = 0f;
+                VideoPlayer.frame = 0;
+                //VideoPlayer.targetTexture.format
                 videoPanel.SetActive(false);
                 gameObject.SetActive(false);
             }

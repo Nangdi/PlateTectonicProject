@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using LeapInternal;
 using UnityEngine.InputSystem.Controls;
+using DG.Tweening; //import
 
 
 public enum ActionState {
@@ -18,6 +19,11 @@ public enum ActionState {
     Select,
     playback,
     Off
+}
+public enum PlayerNum
+{
+    Player1,
+    Player2
 }
 
 
@@ -29,6 +35,7 @@ public class LeapMouseCursor : MonoBehaviour
     public float OffTime =30f; //손이 인식되지않을때 OFF되기까지의 시간
     public float timer; //손이 인식되지 않을때의 타이머
     public ActionState actionState; //현재 플레이어의 상태
+    public PlayerNum playerNum; //플레이어 번호
     public GameObject cursorObject; //모션에 따라 움직이는 플레이어의 커서
     private RectTransform cursorRect; //커서의 Rect
     public GraphicRaycaster raycaster; //커서가 UI를 감지하기 위한 ray
@@ -39,16 +46,16 @@ public class LeapMouseCursor : MonoBehaviour
     private float previousYDistance; // 움직이기전 두손의 y좌표의 거리
     private float waitTime = 1.0f; //한손만 인식된 상태에서 두손이 인식될때 손이 중앙으로 갈 시간을 주는 유예시간
     private bool IsHandsInitialized; //유예시간이 지난후 바뀌는 bool값
-
+    private Vector3 clickSCale = new Vector3(0.5f,0.5f,0.5f);
     //옵션창에서 커스텀 설정할 수 있게 해야하는 것들
     public float motionSensitivity= 0.5f;
     public float distanceThreshold = 0.025f;
     public float handHeight= 0.3f;
     public float mouseSpeed = 0.5f;
+    Sequence clickSequence;
 
 
 
-    
     void Start()
     {
 
@@ -57,6 +64,11 @@ public class LeapMouseCursor : MonoBehaviour
         // playecursor 상태 초기화 : off상태시작
         UpdateCursorState(ActionState.Off);
         gameObject.SetActive(false);
+        clickSequence = DOTween.Sequence();
+
+        // Append: 순차적으로 실행 (첫 번째 애니메이션이 끝나고 두 번째가 실행됨)
+        clickSequence.Append(cursorObject.transform.DOScale(0.5f, 0.2f));  // 그 후에 1초 동안 스케일을 0.5로 줄임
+        clickSequence.Append(cursorObject.transform.DOScale(1, 0.2f));  // 그 후에 1초 동안 스케일을 0.5로 줄임
 
 
     }
@@ -287,4 +299,14 @@ public class LeapMouseCursor : MonoBehaviour
         IsHandsInitialized = false;
         lastbtn.PlaySimulator();
     }
+    public void ClickAni()
+    {
+        // 기존 애니메이션이 있으면 제거
+        cursorObject.transform.DOKill();
+
+        // 스케일을 1로 즉시 초기화
+        cursorObject.transform.localScale = Vector3.one;
+        cursorObject.transform.DOScale(0.5f, 0.1f).SetLoops(2, LoopType.Yoyo);
+    }
+   
 }
