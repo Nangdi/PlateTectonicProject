@@ -299,14 +299,13 @@ public class LeapMouseCursor : MonoBehaviour
         IsHandsInitialized = false;
         lastbtn.PlaySimulator();
     }
-    public void ClickAni()
-    {
-        // 기존 애니메이션이 있으면 제거
-        cursorObject.transform.DOKill();
+    //public void ClickAni()
+    //{
+    //    // 기존 애니메이션이 있으면 제거
+    //    cursorObject.transform.DOKill();
 
-        // 스케일을 1로 즉시 초기화
-        cursorObject.transform.localScale = Vector3.one;
-        cursorObject.transform.DOScale(0.5f, 0.1f).SetLoops(2, LoopType.Yoyo);
-    }
-   
+    //    // 스케일을 1로 즉시 초기화
+    //    cursorObject.transform.localScale = Vector3.one;
+    //    cursorObject.transform.DOScale(0.5f, 0.1f).SetLoops(2, LoopType.Yoyo);
+    //}
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
@@ -24,12 +25,24 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         HandsMoveUpDown,    // 손이 위아래로 멀어질때
 
     }
+    public enum PlateNum
+    {
+        EastAfricanRiftValley,  //  0 동아프리카 열곡대
+        HimalayaMountains,      //  1 히말라야 산맥
+        MarianaTrench,          //  2 마리아나 해구
+        JapanTrench,            //  3 일본해구
+        SanAndreasFault,        //  4 산 안드레아스 단층
+        MidAtlanticRidge,       //  5 대서양 중앙
+        AndesMountains,         //  6 얀데스 산맥
+    }
     public HandAction handAction;
     public ButtonState state;
+    public PlateNum plateNum;
     public GameObject nameUI;
     public GameObject ExplanationUI;
     public List<LeapMouseCursor> players = new List<LeapMouseCursor>();
     public LeapMouseCursor currentCursor;
+    public LeapMouseCursor mouseCursor;
     public RawImage video;
     private void OnEnable()
     {
@@ -87,11 +100,21 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             return;
         }
         Debug.Log("시뮬레이션 실행 방법 :  " + handAction);
+        //if (eventData.currentInputModule is StandaloneInputModule)
+        //{
+        //    currentCursor = mouseCursor;
+        //}
+        //else
+        //if(currentCursor.lastbtn != this)
+        //{
+        //    currentCursor = eventData.pointerClick.GetComponent<LeapMouseCursor>();
+
+        //}
         currentCursor = eventData.pointerClick.GetComponent<LeapMouseCursor>();
         if (currentCursor.lastbtn != this)
         {
             //기존에 보던 패널이 있다면
-            if (currentCursor.lastbtn != null )
+            if (currentCursor.lastbtn != null)
             {
                 //기존설명패널 닫기
                 currentCursor.lastbtn.SetExplanationUI(false);
