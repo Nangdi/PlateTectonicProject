@@ -29,7 +29,11 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Image background;
     [SerializeField]
+    private UnityEngine.UI.Image videoback;
+    [SerializeField]
     private UnityEngine.UI.Image name;
+    [SerializeField]
+    private UnityEngine.UI.Image videoName;
     private void Awake()
     {
         NameColors[0] = player1NameColor;
@@ -41,6 +45,8 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
     private void OnEnable()
     {
         background.sprite = playerBackColor[(int)btn.currentCursor.playerNum];
+        videoback.sprite = playerBackColor[(int)btn.currentCursor.playerNum];
         name.sprite = NameColors[(int)btn.currentCursor.playerNum][(int)btn.plateNum];
+        videoName.sprite = NameColors[(int)btn.currentCursor.playerNum][(int)btn.plateNum];
     }
 }

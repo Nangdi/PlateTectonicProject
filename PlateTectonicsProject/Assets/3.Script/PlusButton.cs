@@ -40,10 +40,33 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public PlateNum plateNum;
     public GameObject nameUI;
     public GameObject ExplanationUI;
+    public GameObject videoUI;
+    public GameObject interaction;
     public List<LeapMouseCursor> players = new List<LeapMouseCursor>();
     public LeapMouseCursor currentCursor;
     public LeapMouseCursor mouseCursor;
     public RawImage video;
+    public List<CollisioEffect> effects = new List<CollisioEffect>();
+    private void Start()
+    {
+        for (int i = 0; i < interaction.transform.childCount; i++) {
+
+            if (!interaction.transform.GetChild(i).gameObject.activeSelf)
+            {
+                continue;
+            }
+            for (int j = 0; j < interaction.transform.GetChild(i).childCount; j++)
+            {
+               
+                if (interaction.transform.GetChild(i).GetChild(j).TryGetComponent<CollisioEffect>(out CollisioEffect effect))
+                {
+                    effects.Add(effect);
+                }
+               
+            }
+        }
+    }
+
     private void OnEnable()
     {
         //state = ButtonState.Idle;
@@ -82,6 +105,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void SetExplanationUI(bool active)
     {
         ExplanationUI.SetActive(active);
+      
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -130,9 +154,16 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         currentCursor.UpdateCursorState(ActionState.Select);
 
     }
-    public void PlaySimulator()
+    public void PlayVideo()
     {
         ExplanationUI.GetComponent<ExplanationPanel>().Play();
+    }
+    public void PlaySimulrator()
+    {
+        for (int i = 0; i < effects.Count; i++)
+        {
+            effects[i].PlaySimulator();
+        }
     }
     private void OnDisable()
     {

@@ -118,9 +118,10 @@ public class LeapMouseCursor : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > OffTime)
             {
-                if(actionState == ActionState.Select)
+                if(actionState == ActionState.Select || actionState == ActionState.playback)
                 {
                     lastbtn.SetExplanationUI(false);
+                    lastbtn.videoUI.SetActive(false);
                 }
 
                 UpdateCursorState(ActionState.Off);
@@ -293,11 +294,12 @@ public class LeapMouseCursor : MonoBehaviour
         previousYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);
         IsHandsInitialized = true;
     }
+    //시뮬레이션 종료후 부르는 비디오판넬 
     public void SimulationPlay()
     {
         UpdateCursorState(ActionState.playback);
         IsHandsInitialized = false;
-        lastbtn.PlaySimulator();
+        lastbtn.PlaySimulrator();
     }
     //public void ClickAni()
     //{
