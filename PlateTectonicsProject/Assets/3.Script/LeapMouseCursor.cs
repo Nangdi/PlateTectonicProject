@@ -54,8 +54,6 @@ public class LeapMouseCursor : MonoBehaviour
     public float mouseSpeed = 0.5f;
     Sequence clickSequence;
 
-
-
     void Start()
     {
 
@@ -187,7 +185,7 @@ public class LeapMouseCursor : MonoBehaviour
                 ExecuteEvents.Execute(targetObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
                 lastObject = targetObject; // 현재 호버된 오브젝트 업데이트
             }
-            
+            AABBCollisionResolve.Instance.CheckOverLab();
         }
         else
         {
@@ -198,7 +196,7 @@ public class LeapMouseCursor : MonoBehaviour
                 lastObject = null; // 호버된 오브젝트 초기화
             }
         }
-
+       
 
   
     }
@@ -219,15 +217,26 @@ public class LeapMouseCursor : MonoBehaviour
         // + 버튼을 눌렀을때만. 시뮬레이션 버튼누를땐 따로 만들어야함
         if (raycastResults.Count > 0)
         {
+            IsHandsInitialized = false;
             // 감지된 버튼 가져오기
             GameObject clickedObject = raycastResults[0].gameObject;
             //클릭이벤트 발생
-            ExecuteEvents.Execute(clickedObject, pointerEventData, ExecuteEvents.pointerClickHandler);
-            
+
             //+버튼을 눌럿을때와 시뮬레이션 버튼을 눌렀을때의 기능을 나눠야할거같음
-          
+
+            //누른 판넬 Rect AABB에 전달하기 , 판넬의 우선순위 전달하기
+            ExecuteEvents.Execute(clickedObject, pointerEventData, ExecuteEvents.pointerClickHandler);
+            if(playerNum == 0)
+            {
+                AABBCollisionResolve.Instance.rectTransform1 = lastbtn.ExplanationUI.GetComponent<RectTransform>();
+            }
+            else
+            {
+                AABBCollisionResolve.Instance.rectTransform2 = lastbtn.ExplanationUI.GetComponent<RectTransform>();
+            }
            
-           
+
+
         }
     }
     public void StandbySimulation(Hand hand, Frame frame)

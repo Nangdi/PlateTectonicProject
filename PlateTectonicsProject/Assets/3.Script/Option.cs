@@ -17,8 +17,24 @@ public class Option : MonoBehaviour
     private Scrollbar handHeightBar;
     [SerializeField]
     private Scrollbar handStabilityBar;
+    [SerializeField]
+    private DeviceData[] deviceDatas;
 
 
+    private List<string> serialNumbers = new List<string>(); //leapMotion에 연결중인 divice
+
+    private void Awake()
+    {
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            transform.GetChild(0).gameObject.SetActive(!transform.GetChild(0).gameObject.activeSelf);
+        }
+    }
+   
     
     public void SetHandHeight()
     {

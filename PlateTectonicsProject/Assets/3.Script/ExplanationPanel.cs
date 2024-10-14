@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Lumin;
 using UnityEngine.UI;
@@ -14,11 +15,22 @@ public class ExplanationPanel : MonoBehaviour
     private float timer = 0f;
     private float playerTime = 10f;
     private bool IsPlay;
+    public int priorityIndex;
+    private Vector3 currentPos;
+    private void Start()
+    {
+       
+    }
+    private void OnEnable()
+    {
+        //transform.position = currentPos;
+        if (priorityIndex != 1)
+        {
+            priorityIndex = 2;
 
-    //private void OnEnable()
-    //{
-    //    IsPlay = false;
-    //}
+        }
+        //AABBCollisionResolve.Instance.CheckOverLab();
+    }
     private void Update()
     {
         if (IsPlay)

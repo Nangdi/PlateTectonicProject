@@ -45,7 +45,7 @@ public class ArrowMove : MonoBehaviour
         yield return new WaitForSeconds(1f);
         isTrigger = true;
         origin = transform.position;
-        Debug.Log(origin);
+        //Debug.Log(origin);
         targetPos = origin;
         targetPos.x += (int)dir * 30;
         //transform.DOMove(targetPos, 3f)
