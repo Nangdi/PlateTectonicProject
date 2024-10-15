@@ -23,13 +23,13 @@ public class ExplanationPanel : MonoBehaviour
     }
     private void OnEnable()
     {
-        //transform.position = currentPos;
+       
         if (priorityIndex != 1)
         {
             priorityIndex = 2;
 
         }
-        //AABBCollisionResolve.Instance.CheckOverLab();
+        transform.localPosition = Vector3.zero;
     }
     private void Update()
     {
@@ -49,6 +49,7 @@ public class ExplanationPanel : MonoBehaviour
     }
     private void OnDisable()
     {
+      
         videoPanel.gameObject.SetActive(false);
         btn.currentCursor.UpdateCursorState(ActionState.Idle);
         IsPlay = false;

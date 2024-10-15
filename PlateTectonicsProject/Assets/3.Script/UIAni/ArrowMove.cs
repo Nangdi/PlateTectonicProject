@@ -6,33 +6,20 @@ using static UnityEngine.UI.Image;
 
 public class ArrowMove : MonoBehaviour
 {
-  public enum Dir
-    {
-        Left =-1,
-        Right =1
-    }
-    [SerializeField]
-    PlusButton plusButton;
-    public Dir dir;
+
     private RectTransform rectTransform;
-    private Vector3 targetPos;
-    private Vector3 origin;
-    private bool isTrigger;
     private Tween moveTween;
+    public float moveDistance = 15f;
     private void Awake()
     {
-        Debug.Log("스타트");
         rectTransform = GetComponent<RectTransform>();
-        Debug.Log(rectTransform.anchoredPosition);
-        StartCoroutine(ArrowMoveCo());
-       
+        AutoMoveArrow();
+
+
     }
     private void OnEnable()
     {
-        if (isTrigger)
-        {
-            transform.position = origin;
-        }
+  
         if(moveTween != null)
         {
 
@@ -40,34 +27,24 @@ public class ArrowMove : MonoBehaviour
 
         }
     }
-    private IEnumerator ArrowMoveCo()
+  
+    public void AutoMoveArrow()
     {
-        yield return new WaitForSeconds(1f);
-        isTrigger = true;
-        origin = transform.position;
-        //Debug.Log(origin);
-        targetPos = origin;
-        targetPos.x += (int)dir * 30;
-        //transform.DOMove(targetPos, 3f)
-        //    .SetLoops(-1, LoopType.Restart);
-        Vector3 localPosition = new Vector3(0, 30, 0); // 원하는 로컬 포지션
-        transform.DOLocalMove(localPosition, 1f);
+        // Z 축 회전 값 가져오기 (EulerAngles로 접근)
+        float zRotation = transform.eulerAngles.z;
 
-        if (plusButton.handAction == PlusButton.HandAction.HandsMoveUpDown)
-        {
-            moveTween = transform.DOMove(transform.position + new Vector3(0, -(int)dir * 30, 0) , 3f)
-         .SetLoops(-1, LoopType.Restart);
-        }
-        else
-        {
+        // Z 회전 값을 라디안으로 변환 (Trig 함수는 라디안을 사용)
+        float radians = zRotation * Mathf.Deg2Rad;
 
-            moveTween = transform.DOMove(transform.position + new Vector3((int)dir * 30,  0, 0), 3f)
-           .SetLoops(-1, LoopType.Restart);
-        }
+        // 화살표가 가리키는 방향 계산 (단위 벡터)
+        Vector3 direction = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0);
+
+        // DoLocalMove를 통해 해당 방향으로 이동
+        moveTween = transform.DOLocalMove(transform.localPosition + direction * moveDistance, 3f).SetLoops(-1, LoopType.Restart);
+
     }
     private void OnDisable()
     {
-        Debug.Log("꺼짐");
         moveTween.Pause();
     }
 }

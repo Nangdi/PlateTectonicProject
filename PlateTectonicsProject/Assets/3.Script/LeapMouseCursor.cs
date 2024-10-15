@@ -11,7 +11,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using LeapInternal;
 using UnityEngine.InputSystem.Controls;
-using DG.Tweening; //import
+using DG.Tweening;
+using System.Runtime.CompilerServices; //import
 
 
 public enum ActionState {
@@ -53,7 +54,9 @@ public class LeapMouseCursor : MonoBehaviour
     public float handHeight= 0.3f;
     public float mouseSpeed = 0.5f;
     Sequence clickSequence;
-
+    public GameObject prefab;
+    public RectTransform spawnPos;
+    public Transform particlePool;
     void Start()
     {
 
@@ -95,6 +98,7 @@ public class LeapMouseCursor : MonoBehaviour
             {
                 if (IsHandsInitialized)
                 {
+                    
                     StandbySimulation(hand, frame);
                 }
                 else
@@ -185,7 +189,7 @@ public class LeapMouseCursor : MonoBehaviour
                 ExecuteEvents.Execute(targetObject, pointerEventData, ExecuteEvents.pointerEnterHandler);
                 lastObject = targetObject; // 현재 호버된 오브젝트 업데이트
             }
-            AABBCollisionResolve.Instance.CheckOverLab();
+          
         }
         else
         {
@@ -259,14 +263,15 @@ public class LeapMouseCursor : MonoBehaviour
                 {
                     //두손이 가까워질때 실행되는 곳
                     Debug.Log("수렴형 경계 : 손이 가까워짐");
-                    SimulationPlay();
+
+                    StartCoroutine(SpawnParticle());
                 }
                 break;
             case PlusButton.HandAction.ZoomIn: //손이멀어질때 : 발산
                 if (currentDistance - previousDistance > distanceThreshold)
                 {
                     Debug.Log("발산형 경계 : 손이 멀어짐");
-                    SimulationPlay();
+                    StartCoroutine(SpawnParticle());
                     // 여기에 두 손이 멀어졌을 때 실행할 동작 추가 
                 }
                 break;
@@ -275,7 +280,7 @@ public class LeapMouseCursor : MonoBehaviour
                 {
                     //양손이 위아래로 거리가 벌려질때
                     Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
-                    SimulationPlay();
+                    StartCoroutine(SpawnParticle());
                 }
                 break;
         }
@@ -319,4 +324,25 @@ public class LeapMouseCursor : MonoBehaviour
     //    cursorObject.transform.localScale = Vector3.one;
     //    cursorObject.transform.DOScale(0.5f, 0.1f).SetLoops(2, LoopType.Yoyo);
     //}
+    public void ParticleRing()
+    {
+
+    }
+    IEnumerator SpawnParticle()
+    {
+        IsHandsInitialized = false;
+        spawnPos = lastbtn.particlePos;
+        for (int i = 0; i < 6; i++)
+        {
+            Debug.Log("파티클생성");
+            // 프리팹을 지정된 위치에 생성
+           GameObject Ob = Instantiate(prefab, spawnPos.position, Quaternion.identity);
+            Ob.transform.SetParent(particlePool);
+
+            // 0.5초 대기
+            yield return new WaitForSeconds(0.2f);
+        }
+            yield return new WaitForSeconds(2.8f);
+        SimulationPlay();
+    }
 }

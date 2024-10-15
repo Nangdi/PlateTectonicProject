@@ -46,7 +46,7 @@ public class SceneManager : MonoBehaviour
         if (player1_cursor.actionState ==ActionState.Off && player2_cursor.actionState == ActionState.Off)
         {
             //대기화면 키기
-            SetActiveStandbyScreen(true);
+            //SetActiveStandbyScreen(true);
         }
 
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using static ArrowMove;
 
 public class AABBCollisionResolve : MonoBehaviour
@@ -12,6 +13,7 @@ public class AABBCollisionResolve : MonoBehaviour
     public float pushBackDistance = 10f;  // 두 개의 UI 요소를 서로 멀어지게 할 거리
     private float overlapX;
     private float overlapY;
+    Tween tween;
     private void Awake()
     {
         Instance = this;
@@ -27,20 +29,24 @@ public class AABBCollisionResolve : MonoBehaviour
 
     bool IsAABBCollision(RectTransform rect1, RectTransform rect2)
     {
+        //둘중 하나라도 선택되지 않았거나 , 둘중 하나라도 active가 false 면 겹치지 않은걸로 판정 
+        if ((rect1 == null || rect2 == null) || (!rect1.gameObject.activeSelf || !rect2.gameObject.activeSelf)) return false;
         Rect rect1World = GetWorldRect(rect1);
         Rect rect2World = GetWorldRect(rect2);
-  
-
         if (rect1World.max.x < rect2World.min.x || // rect1의 오른쪽이 rect2의 왼쪽보다 왼쪽에 있음
           rect1World.min.x > rect2World.max.x || // rect1의 왼쪽이 rect2의 오른쪽보다 오른쪽에 있음
           rect1World.max.y < rect2World.min.y || // rect1의 위쪽이 rect2의 아래쪽보다 아래에 있음
           rect1World.min.y > rect2World.max.y)   // rect1의 아래쪽이 rect2의 위쪽보다 위에 있음
         {
-            overlapX = 0;
-            overlapY = 0;
+            //overlapX = 0;
+            //overlapY = 0;
             Debug.Log("충돌안함");
             return false; // 충돌하지 않음
         }
+        Debug.Log(rect1World.min.x);
+        Debug.Log(rect1World.max.x);
+        Debug.Log(rect2World.min.x);
+        Debug.Log(rect2World.max.x);
         overlapX = Mathf.Min(rect1World.max.x, rect2World.max.x) - Mathf.Max(rect1World.min.x, rect2World.min.x); // x 길이
         overlapY = Mathf.Min(rect1World.max.y, rect2World.max.y) - Mathf.Max(rect1World.min.y, rect2World.min.y); // y 길이
             Debug.Log("충돌함");
@@ -109,11 +115,15 @@ public class AABBCollisionResolve : MonoBehaviour
     }
     private void MovePanel(RectTransform rectTransform , int dir)
     {
-        // 현재 위치를 가져옴
-        Vector3 currentPos = rectTransform.position;
+        
+        //현재 위치를 가져옴
+        Vector3 currentPos = rectTransform.localPosition;
 
         // x축 값을 변경하고 나머지 값을 그대로 유지
-        rectTransform.position = new Vector3(currentPos.x + dir * overlapX, currentPos.y, currentPos.z);
+        Vector3 targetPos = new Vector3(currentPos.x + dir * overlapX, currentPos.y, currentPos.z);
+        tween = rectTransform.DOLocalMove(targetPos, 0.5f).SetEase(Ease.OutQuad);
+        //두번클릭했을때 움직이지 않는버그 찾아야함
+
     }
     public void CheckOverLab()
     {

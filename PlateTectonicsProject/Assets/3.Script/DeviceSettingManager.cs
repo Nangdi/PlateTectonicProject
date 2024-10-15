@@ -25,7 +25,7 @@ public class DeviceSettingManager : MonoBehaviour
         instance = this;
         filePath = Path.Combine(Application.persistentDataPath, "gameData.json");
         LoadData();
-        Debug.Log("µ•¿Ã≈Õ¿Œ¿’");
+        Debug.Log("¡¶¿ÃΩºµ•¿Ã≈Õ∫“∑Øø»");
         provider1.SpecificSerialNumber = jsondata.P1SerialNum;
         provider2.SpecificSerialNumber = jsondata.P2SerialNum;
 

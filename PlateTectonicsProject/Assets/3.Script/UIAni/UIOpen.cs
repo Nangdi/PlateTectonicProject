@@ -13,16 +13,17 @@ public class UIOpen : MonoBehaviour
     private void Start()
     {
        originScale = transform.localScale;
+        transform.localScale = Vector3.zero;
     }
     private void OnEnable()
     {
-        transform.DOScale(0.9f, 0.3f).SetEase(Ease.OutCirc);
-        transform.DOMove(tartgetTransform.position, 0.3f).SetEase(Ease.OutCirc).OnComplete(() =>  AABBCollisionResolve.Instance.CheckOverLab());
+        transform.DOScale(0.9f, 0.3f).SetEase(Ease.OutCirc).OnComplete(() => { AABBCollisionResolve.Instance.CheckOverLab(); });
+        //transform.DOMove(tartgetTransform.position, 0.3f).SetEase(Ease.OutCirc).OnComplete(() =>  AABBCollisionResolve.Instance.CheckOverLab());
     }
     private void OnDisable()
     {
         transform.localScale = Vector3.zero;
-        transform.localPosition = Vector3.zero;
+        //transform.localPosition = Vector3.zero;
     }
 
 }

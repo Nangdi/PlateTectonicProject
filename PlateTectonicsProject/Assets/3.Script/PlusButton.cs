@@ -47,6 +47,8 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public LeapMouseCursor mouseCursor;
     public RawImage video;
     public List<CollisioEffect> effects = new List<CollisioEffect>();
+    public AccentControll accentControl;
+    public RectTransform particlePos;
     private void Start()
     {
         for (int i = 0; i < interaction.transform.childCount; i++) {
@@ -105,6 +107,10 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void SetExplanationUI(bool active)
     {
         ExplanationUI.SetActive(active);
+        if (active)
+        {
+            currentCursor.UpdateCursorState(ActionState.Select);
+        }
       
     }
     public void OnPointerEnter(PointerEventData eventData)
@@ -142,16 +148,19 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 //기존설명패널 닫기
                 currentCursor.lastbtn.SetExplanationUI(false);
+                currentCursor.lastbtn.accentControl.StopAccent();
             }
             //버튼스크립트에 설명패널 Active 키는 메소드 만든후 추가
 
            
         }
+        
         currentCursor.lastbtn = this;
-
-        SetExplanationUI(true); // 설명패널키는 메소드
+        //accentControl.gameObject.SetActive(true);
+        accentControl.PlayAccent();
+         // 설명패널키는 메소드 => AccentControll에서 ani끝난후 켜짐
                              //이전버튼의 players에서 나를 지워줘야함
-        currentCursor.UpdateCursorState(ActionState.Select);
+       
 
     }
     public void PlayVideo()
