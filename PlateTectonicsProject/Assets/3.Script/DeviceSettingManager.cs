@@ -9,6 +9,10 @@ public class JsonData
 {
     public string P1SerialNum;
     public string P2SerialNum;
+    public float handHeight;
+    public float handStability;
+    public float motionSensitivity;
+    public float mouseSpeed;
 }
 public class DeviceSettingManager : MonoBehaviour
 {

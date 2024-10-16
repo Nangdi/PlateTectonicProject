@@ -10,6 +10,7 @@ public class ArrowMove : MonoBehaviour
     private RectTransform rectTransform;
     private Tween moveTween;
     public float moveDistance = 15f;
+    public float moveCycle = 3f;
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -40,7 +41,7 @@ public class ArrowMove : MonoBehaviour
         Vector3 direction = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0);
 
         // DoLocalMove를 통해 해당 방향으로 이동
-        moveTween = transform.DOLocalMove(transform.localPosition + direction * moveDistance, 3f).SetLoops(-1, LoopType.Restart);
+        moveTween = transform.DOLocalMove(transform.localPosition + direction * moveDistance, moveCycle).SetLoops(-1, LoopType.Restart);
 
     }
     private void OnDisable()

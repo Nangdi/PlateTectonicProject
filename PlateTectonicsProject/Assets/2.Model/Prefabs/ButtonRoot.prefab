@@ -486,7 +486,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 230}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -103.1, y: 11.3}
+  m_AnchoredPosition: {x: -86.5, y: 24.9}
   m_SizeDelta: {x: 356.6568, y: 222.5115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1766519444378075826
@@ -540,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 15
+  moveCycle: 2
 --- !u!1 &1329472312359040507
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,6 +702,8 @@ MonoBehaviour:
   effects: []
   accentControl: {fileID: 2691679665240685532}
   particlePos: {fileID: 2835125968581811862}
+  guideText: {fileID: 4430417182782978892}
+  arrowHand: {fileID: 861198610990589161}
 --- !u!212 &4107933358841520426
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -917,6 +920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 0
+  moveCycle: 3
 --- !u!1 &2564081123431830547
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,7 +956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -151.3, y: -46.5}
+  m_AnchoredPosition: {x: -165.6, y: -67.6}
   m_SizeDelta: {x: 356.6568, y: 222.5115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3565660732570783611
@@ -1006,6 +1010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 15
+  moveCycle: 2
 --- !u!1 &2613284146287137629
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,6 +1344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 0
+  moveCycle: 3
 --- !u!1 &3277434269402099051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,7 +1605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2717813225082552209
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2796,6 +2802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 0
+  moveCycle: 3
 --- !u!1 &6517821481305141271
 GameObject:
   m_ObjectHideFlags: 0
@@ -3401,7 +3408,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -375, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2691679665240685532
@@ -3509,6 +3516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 0
+  moveCycle: 3
 --- !u!1 &8598971267809996756
 GameObject:
   m_ObjectHideFlags: 0
@@ -3598,6 +3606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 0
+  moveCycle: 3
 --- !u!1 &8776371054412041461
 GameObject:
   m_ObjectHideFlags: 0
@@ -3722,6 +3731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 0
+  moveCycle: 3
 --- !u!1 &9086715391648327780
 GameObject:
   m_ObjectHideFlags: 0

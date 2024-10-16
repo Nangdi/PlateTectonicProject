@@ -14,6 +14,14 @@ public class AABBCollisionResolve : MonoBehaviour
     private float overlapX;
     private float overlapY;
     Tween tween;
+    //내가 작업한 해상도 
+    float referenceWidth = 1920f; 
+    float referenceHeight = 1080f;
+    //현재 적용중인 해상도
+    float currentWidth = Screen.width;
+    float currentHeight = Screen.height;
+
+
     private void Awake()
     {
         Instance = this;
@@ -43,10 +51,7 @@ public class AABBCollisionResolve : MonoBehaviour
             Debug.Log("충돌안함");
             return false; // 충돌하지 않음
         }
-        Debug.Log(rect1World.min.x);
-        Debug.Log(rect1World.max.x);
-        Debug.Log(rect2World.min.x);
-        Debug.Log(rect2World.max.x);
+       
         overlapX = Mathf.Min(rect1World.max.x, rect2World.max.x) - Mathf.Max(rect1World.min.x, rect2World.min.x); // x 길이
         overlapY = Mathf.Min(rect1World.max.y, rect2World.max.y) - Mathf.Max(rect1World.min.y, rect2World.min.y); // y 길이
             Debug.Log("충돌함");
@@ -65,11 +70,13 @@ public class AABBCollisionResolve : MonoBehaviour
 
     Rect GetWorldRect(RectTransform rt)
     {
+        Canvas canvas = rt.GetComponentInParent<Canvas>();
+        float scaleFactor = canvas.scaleFactor;
         Vector3[] corners = new Vector3[4];
         rt.GetWorldCorners(corners);
 
-        Vector3 topLeft = corners[0];
-        Vector3 bottomRight = corners[2];
+        Vector3 topLeft = corners[0] / scaleFactor;
+        Vector3 bottomRight = corners[2] / scaleFactor;
 
         return new Rect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
     }
@@ -115,10 +122,15 @@ public class AABBCollisionResolve : MonoBehaviour
     }
     private void MovePanel(RectTransform rectTransform , int dir)
     {
-        
+
+       
+        //float widthRatio = currentWidth / referenceWidth;
+        //float heightRatio = currentHeight / referenceHeight;
+        //float scalingFactor = Mathf.Min(widthRatio, heightRatio);
         //현재 위치를 가져옴
         Vector3 currentPos = rectTransform.localPosition;
 
+        //float adjustedOverlapX = overlapX * scalingFactor;
         // x축 값을 변경하고 나머지 값을 그대로 유지
         Vector3 targetPos = new Vector3(currentPos.x + dir * overlapX, currentPos.y, currentPos.z);
         tween = rectTransform.DOLocalMove(targetPos, 0.5f).SetEase(Ease.OutQuad);
@@ -131,5 +143,11 @@ public class AABBCollisionResolve : MonoBehaviour
         {
             CarculatePriorities();
         }
+    }
+    private void OverlabCorrect(float _overlap)
+    {
+     
+
+
     }
 }

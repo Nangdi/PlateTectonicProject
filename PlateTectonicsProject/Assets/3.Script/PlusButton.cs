@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -49,6 +50,9 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public List<CollisioEffect> effects = new List<CollisioEffect>();
     public AccentControll accentControl;
     public RectTransform particlePos;
+
+    public TMP_Text guideText;
+    public GameObject arrowHand;
     private void Start()
     {
         for (int i = 0; i < interaction.transform.childCount; i++) {
@@ -130,17 +134,10 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             return;
         }
         Debug.Log("시뮬레이션 실행 방법 :  " + handAction);
-        //if (eventData.currentInputModule is StandaloneInputModule)
-        //{
-        //    currentCursor = mouseCursor;
-        //}
-        //else
-        //if(currentCursor.lastbtn != this)
-        //{
-        //    currentCursor = eventData.pointerClick.GetComponent<LeapMouseCursor>();
+      
 
-        //}
         currentCursor = eventData.pointerClick.GetComponent<LeapMouseCursor>();
+
         if (currentCursor.lastbtn != this)
         {
             //기존에 보던 패널이 있다면
@@ -157,6 +154,8 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         
         currentCursor.lastbtn = this;
         //accentControl.gameObject.SetActive(true);
+        //여기서 화살표 켜주기? or 설명판넬 닫힐때 켜주기 or 두손이 모두 인식됐을때 화살표 켜주기 
+
         accentControl.PlayAccent();
          // 설명패널키는 메소드 => AccentControll에서 ani끝난후 켜짐
                              //이전버튼의 players에서 나를 지워줘야함
@@ -169,13 +168,22 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     public void PlaySimulrator()
     {
+        
+        //todo 시뮬레이션 실행시 화살표없애기
         for (int i = 0; i < effects.Count; i++)
         {
             effects[i].PlaySimulator();
         }
     }
+    public void ReadySimulrator(bool _isReady)
+    {
+        //if (arrowHand.activeSelf == _isReady) return;
+        guideText.gameObject.SetActive(!_isReady); //준비되면꺼주기 안되면 키기
+        arrowHand.SetActive(_isReady); //준비되면켜주기 안되면 끄기
+    }
     private void OnDisable()
     {
         state = ButtonState.Idle;
     }
+
 }

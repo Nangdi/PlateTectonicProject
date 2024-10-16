@@ -57,6 +57,8 @@ public class AccentControll : MonoBehaviour
     {
         Debug.Log("온컴플리트");
         gameObject.SetActive(false);
+        //todo 화살표 Acrive 켜주기
+
         plusBtn.SetExplanationUI(true);
     }
 

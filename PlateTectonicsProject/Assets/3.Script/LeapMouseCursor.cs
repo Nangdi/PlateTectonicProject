@@ -49,10 +49,10 @@ public class LeapMouseCursor : MonoBehaviour
     private bool IsHandsInitialized; //유예시간이 지난후 바뀌는 bool값
     private Vector3 clickSCale = new Vector3(0.5f,0.5f,0.5f);
     //옵션창에서 커스텀 설정할 수 있게 해야하는 것들
-    public float motionSensitivity= 0.5f;
-    public float distanceThreshold = 0.025f;
+    public float mouseSpeed= 0.5f;
+    public float motionSensitivity = 0.025f;
     public float handHeight= 0.3f;
-    public float mouseSpeed = 0.5f;
+    public float handStability = 0.5f;
     Sequence clickSequence;
     public GameObject prefab;
     public RectTransform spawnPos;
@@ -109,6 +109,10 @@ public class LeapMouseCursor : MonoBehaviour
             else
             {
                 IsHandsInitialized = false;
+                if(lastbtn != null && actionState == ActionState.Select)
+                {
+                    lastbtn.ReadySimulrator(false);
+                }
             }
 
         }
@@ -143,7 +147,7 @@ public class LeapMouseCursor : MonoBehaviour
     private void MapHandToCursor(Hand hand)
     {
         Vector3 handPosition = hand.PalmPosition;
-        float motionSpeed = (3000 + (4000 * motionSensitivity));
+        float motionSpeed = (3000 + (6000 * mouseSpeed));
         int mouseX = (int)Mathf.Clamp(handPosition.x * motionSpeed, -Screen.width / 2, Screen.width / 2);
         int mouseY = (int)Mathf.Clamp((handPosition.y - (0.5f - handHeight)) * motionSpeed, -Screen.height / 2, Screen.height / 2);
         //Debug.Log("mouse" + mouseX + ", " + mouseY);
@@ -153,7 +157,7 @@ public class LeapMouseCursor : MonoBehaviour
         cursorRect.anchoredPosition = Vector2.Lerp(
          cursorRect.anchoredPosition, // 현재 위치
          UpdateCursorPosition(mouseX, mouseY), // 목표 위치
-         Time.deltaTime * (3 - (mouseSpeed * 2))   // 보간 속도
+         Time.deltaTime * (3 - (handStability * 2))   // 보간 속도
          );
     }
 
@@ -255,11 +259,11 @@ public class LeapMouseCursor : MonoBehaviour
         float currentDistance = Vector3.Distance(leftHandPosition, rightHandPosition); //ZoomIn ZoomOut 판별을 위한 현재 두손사이의 거리
         float currentYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z); // HandsUpDown을 판별하기 위한 현재 y거리
                                                                                       // 이전 거리와 현재 거리를 비교하여 손이 멀어졌는지 판단
-
+        float motiondistance = 0.01f + (0.03f * motionSensitivity);
         switch (lastbtn.handAction)
         {
             case PlusButton.HandAction.ZoomOut: //손이 가까워질때 : 수렴
-                if (currentDistance - previousDistance < -distanceThreshold)
+                if (currentDistance - previousDistance < -motiondistance)
                 {
                     //두손이 가까워질때 실행되는 곳
                     Debug.Log("수렴형 경계 : 손이 가까워짐");
@@ -268,7 +272,7 @@ public class LeapMouseCursor : MonoBehaviour
                 }
                 break;
             case PlusButton.HandAction.ZoomIn: //손이멀어질때 : 발산
-                if (currentDistance - previousDistance > distanceThreshold)
+                if (currentDistance - previousDistance > motiondistance)
                 {
                     Debug.Log("발산형 경계 : 손이 멀어짐");
                     StartCoroutine(SpawnParticle());
@@ -276,7 +280,7 @@ public class LeapMouseCursor : MonoBehaviour
                 }
                 break;
             case PlusButton.HandAction.HandsMoveUpDown:  //손이위아래로멀어질때 : 보존
-                if (currentYDistance - previousYDistance > distanceThreshold)
+                if (currentYDistance - previousYDistance > motiondistance)
                 {
                     //양손이 위아래로 거리가 벌려질때
                     Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
@@ -307,6 +311,7 @@ public class LeapMouseCursor : MonoBehaviour
         previousDistance = Vector3.Distance(leftHandPosition, rightHandPosition);
         previousYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);
         IsHandsInitialized = true;
+        lastbtn.ReadySimulrator(true);
     }
     //시뮬레이션 종료후 부르는 비디오판넬 
     public void SimulationPlay()
@@ -330,10 +335,19 @@ public class LeapMouseCursor : MonoBehaviour
     }
     IEnumerator SpawnParticle()
     {
+        UpdateCursorState(ActionState.playback);
         IsHandsInitialized = false;
+        lastbtn.guideText.gameObject.SetActive(false); //준비되면꺼주기 안되면 키기
+        Debug.Log(lastbtn.arrowHand.activeSelf);
+        lastbtn. arrowHand.SetActive(false); //준비되면켜주기 안되면 끄기
+        Debug.Log(lastbtn.arrowHand.activeSelf);
         spawnPos = lastbtn.particlePos;
         for (int i = 0; i < 6; i++)
         {
+            if (lastbtn.arrowHand.activeSelf)
+            {
+                lastbtn.arrowHand.SetActive(false); //준비되면켜주기 안되면 끄기
+            }
             Debug.Log("파티클생성");
             // 프리팹을 지정된 위치에 생성
            GameObject Ob = Instantiate(prefab, spawnPos.position, Quaternion.identity);
@@ -342,7 +356,7 @@ public class LeapMouseCursor : MonoBehaviour
             // 0.5초 대기
             yield return new WaitForSeconds(0.2f);
         }
-            yield return new WaitForSeconds(2.8f);
+            yield return new WaitForSeconds(3f);
         SimulationPlay();
     }
 }
