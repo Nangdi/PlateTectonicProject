@@ -13,8 +13,8 @@ public class AccentControll : MonoBehaviour
     private Image accentPanel;
     [SerializeField]
     private GameObject arrow1;
-    [SerializeField]
-    private GameObject arrow2;
+    //[SerializeField]
+    //private GameObject arrow2;
     private Vector3 originScale;
     private Vector3 targetScale;
     private Sequence accentSequence; // Sequence를 저장할 변수
@@ -23,7 +23,7 @@ public class AccentControll : MonoBehaviour
     {
         //arrow 기본크기 저장
         originScale = arrow1.transform.localScale;
-        targetScale = originScale * 1.5f;
+        targetScale = originScale * 2f;
         gameObject.SetActive(false);
     }
     private void OnEnable()
@@ -31,7 +31,7 @@ public class AccentControll : MonoBehaviour
         //accentPanel 투명 0 초기화
         // arrow 원래크기로 초기화
         accentPanel.DOFade(0f, 0f);
-        arrow1.transform.localScale = arrow2.transform.localScale = originScale;
+        arrow1.transform.localScale = arrow1.transform.localScale = originScale;
         //PlayAccent();
     }
     //판넬 페이드인 아웃
@@ -41,8 +41,8 @@ public class AccentControll : MonoBehaviour
         gameObject.SetActive(true);
         accentSequence = DOTween.Sequence();
         accentSequence.Append(arrow1.transform.DOScale(targetScale, 1))
-            .Join(arrow2.transform.DOScale(targetScale, 1))
-            .Join(accentPanel.DOFade(0.45f, 1f).SetLoops(6, LoopType.Yoyo))
+            //.Join(arrow2.transform.DOScale(targetScale, 1))
+            .Join(accentPanel.DOFade(1f, 1f).SetLoops(6, LoopType.Yoyo))
             .OnComplete(() => CompleteAni());
     }
     public void StopAccent()
@@ -58,8 +58,12 @@ public class AccentControll : MonoBehaviour
         Debug.Log("온컴플리트");
         gameObject.SetActive(false);
         //todo 화살표 Acrive 켜주기
-
+      
         plusBtn.SetExplanationUI(true);
+    }
+    private void OnDisable()
+    {
+        arrow1.transform.DOScale(1, 1);
     }
 
 

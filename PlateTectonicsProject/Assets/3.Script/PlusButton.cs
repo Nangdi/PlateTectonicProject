@@ -49,10 +49,11 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public RawImage video;
     public List<CollisioEffect> effects = new List<CollisioEffect>();
     public AccentControll accentControl;
+    public VideoController videoController;
     public RectTransform particlePos;
 
-    public TMP_Text guideText;
-    public GameObject arrowHand;
+    public GameObject unReadyImage;
+    public GameObject ReadyImage;
     private void Start()
     {
         for (int i = 0; i < interaction.transform.childCount; i++) {
@@ -157,9 +158,10 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         //여기서 화살표 켜주기? or 설명판넬 닫힐때 켜주기 or 두손이 모두 인식됐을때 화살표 켜주기 
 
         accentControl.PlayAccent();
-         // 설명패널키는 메소드 => AccentControll에서 ani끝난후 켜짐
-                             //이전버튼의 players에서 나를 지워줘야함
-       
+        //SetExplanationUI(true);
+        // 설명패널키는 메소드 => AccentControll에서 ani끝난후 켜짐
+        //이전버튼의 players에서 나를 지워줘야함
+
 
     }
     public void PlayVideo()
@@ -168,18 +170,20 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     public void PlaySimulrator()
     {
-        
-        //todo 시뮬레이션 실행시 화살표없애기
-        for (int i = 0; i < effects.Count; i++)
-        {
-            effects[i].PlaySimulator();
-        }
+        videoController.PlayVideo();
+
+        ReadyImage.SetActive(false);
+        ////todo 시뮬레이션 실행시 화살표없애기
+        //for (int i = 0; i < effects.Count; i++)
+        //{
+        //    effects[i].PlaySimulator();
+        //}
     }
     public void ReadySimulrator(bool _isReady)
     {
         //if (arrowHand.activeSelf == _isReady) return;
-        guideText.gameObject.SetActive(!_isReady); //준비되면꺼주기 안되면 키기
-        arrowHand.SetActive(_isReady); //준비되면켜주기 안되면 끄기
+        unReadyImage.gameObject.SetActive(!_isReady); //준비되면꺼주기 안되면 키기
+        ReadyImage.SetActive(_isReady); //준비되면켜주기 안되면 끄기
     }
     private void OnDisable()
     {

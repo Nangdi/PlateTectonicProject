@@ -11,17 +11,26 @@ public class ArrowMove : MonoBehaviour
     private Tween moveTween;
     public float moveDistance = 15f;
     public float moveCycle = 3f;
+    public bool isAutoDir = true;
+    public Vector3 dir = Vector2.right;
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        AutoMoveArrow();
+        if (isAutoDir)
+        {
+            AutoMoveArrow();
+        }
+        else
+        {
+            SetDirMoveArrow(dir);
+        }
 
 
     }
     private void OnEnable()
     {
-  
-        if(moveTween != null)
+
+        if (moveTween != null)
         {
 
             moveTween.Play();
@@ -43,6 +52,10 @@ public class ArrowMove : MonoBehaviour
         // DoLocalMove를 통해 해당 방향으로 이동
         moveTween = transform.DOLocalMove(transform.localPosition + direction * moveDistance, moveCycle).SetLoops(-1, LoopType.Restart);
 
+    }
+    public void SetDirMoveArrow(Vector3 dir)
+    {
+        moveTween = transform.DOLocalMove(transform.localPosition + dir * moveDistance, moveCycle).SetLoops(-1, LoopType.Restart);
     }
     private void OnDisable()
     {

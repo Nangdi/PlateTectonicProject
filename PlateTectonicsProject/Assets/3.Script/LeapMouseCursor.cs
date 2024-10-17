@@ -57,6 +57,7 @@ public class LeapMouseCursor : MonoBehaviour
     public GameObject prefab;
     public RectTransform spawnPos;
     public Transform particlePool;
+    private Coroutine HandDetectCo;
     void Start()
     {
 
@@ -98,7 +99,6 @@ public class LeapMouseCursor : MonoBehaviour
             {
                 if (IsHandsInitialized)
                 {
-                    
                     StandbySimulation(hand, frame);
                 }
                 else
@@ -121,6 +121,11 @@ public class LeapMouseCursor : MonoBehaviour
             //손이감지되지 않을시 일정시간이 흐른후 state를 Off로 바꿔서 모든 요소를 초기화한다.
             //켜놓은 패널 , 플레이어 가이드멘트 , 
             //인식됐을때 timer 초기화와 Active가 꺼졌을때 켜줄 Manager를 새로 만들어야 할거같음
+            IsHandsInitialized = false;
+            if (lastbtn != null && actionState == ActionState.Select)
+            {
+                lastbtn.ReadySimulrator(false);
+            }
             timer += Time.deltaTime;
             if (timer > OffTime)
             {
@@ -267,15 +272,16 @@ public class LeapMouseCursor : MonoBehaviour
                 {
                     //두손이 가까워질때 실행되는 곳
                     Debug.Log("수렴형 경계 : 손이 가까워짐");
-
-                    StartCoroutine(SpawnParticle());
+                    SimulationPlay();
+                    //StartCoroutine(SpawnParticle());
                 }
                 break;
             case PlusButton.HandAction.ZoomIn: //손이멀어질때 : 발산
                 if (currentDistance - previousDistance > motiondistance)
                 {
                     Debug.Log("발산형 경계 : 손이 멀어짐");
-                    StartCoroutine(SpawnParticle());
+                    SimulationPlay();
+                    //StartCoroutine(SpawnParticle());
                     // 여기에 두 손이 멀어졌을 때 실행할 동작 추가 
                 }
                 break;
@@ -284,7 +290,8 @@ public class LeapMouseCursor : MonoBehaviour
                 {
                     //양손이 위아래로 거리가 벌려질때
                     Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
-                    StartCoroutine(SpawnParticle());
+                    SimulationPlay();
+                    //StartCoroutine(SpawnParticle());
                 }
                 break;
         }
@@ -337,16 +344,16 @@ public class LeapMouseCursor : MonoBehaviour
     {
         UpdateCursorState(ActionState.playback);
         IsHandsInitialized = false;
-        lastbtn.guideText.gameObject.SetActive(false); //준비되면꺼주기 안되면 키기
-        Debug.Log(lastbtn.arrowHand.activeSelf);
-        lastbtn. arrowHand.SetActive(false); //준비되면켜주기 안되면 끄기
-        Debug.Log(lastbtn.arrowHand.activeSelf);
+        lastbtn.unReadyImage.gameObject.SetActive(false); //준비되면꺼주기 안되면 키기
+        Debug.Log(lastbtn.ReadyImage.activeSelf);
+        lastbtn. ReadyImage.SetActive(false); //준비되면켜주기 안되면 끄기
+        Debug.Log(lastbtn.ReadyImage.activeSelf);
         spawnPos = lastbtn.particlePos;
         for (int i = 0; i < 6; i++)
         {
-            if (lastbtn.arrowHand.activeSelf)
+            if (lastbtn.ReadyImage.activeSelf)
             {
-                lastbtn.arrowHand.SetActive(false); //준비되면켜주기 안되면 끄기
+                lastbtn.ReadyImage.SetActive(false); //준비되면켜주기 안되면 끄기
             }
             Debug.Log("파티클생성");
             // 프리팹을 지정된 위치에 생성

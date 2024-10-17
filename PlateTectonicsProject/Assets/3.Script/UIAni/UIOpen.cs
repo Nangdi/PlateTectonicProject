@@ -9,21 +9,23 @@ public class UIOpen : MonoBehaviour
     private Transform tartgetTransform;
 
     private Vector3 originScale;
+    private Vector3 origintrasform;
 
-    private void Start()
+    private void Awake()
     {
-       originScale = transform.localScale;
+       //originScale = transform.localScale;
+        origintrasform = transform.localPosition;
         transform.localScale = Vector3.zero;
     }
     private void OnEnable()
     {
-        transform.DOScale(0.9f, 0.3f).SetEase(Ease.OutCirc).OnComplete(() => { AABBCollisionResolve.Instance.CheckOverLab(); });
+        transform.DOScale(1f, 0.3f).SetEase(Ease.OutCirc).OnComplete(() => { AABBCollisionResolve.Instance.CheckOverLab(); });
         //transform.DOMove(tartgetTransform.position, 0.3f).SetEase(Ease.OutCirc).OnComplete(() =>  AABBCollisionResolve.Instance.CheckOverLab());
     }
     private void OnDisable()
     {
+        transform.localPosition = origintrasform;
         transform.localScale = Vector3.zero;
-        //transform.localPosition = Vector3.zero;
     }
 
 }

@@ -16,12 +16,11 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
      5 ´ë¼­¾ç Áß¾Ó
      6 ¾áµ¥½º »ê¸Æ*/
     [SerializeField]
-    private Sprite[] playerBackColor = new Sprite[2]; //0 Player1 , 1 Player2
+    private Sprite[] platePanel = new Sprite[7]; //0 Player1 , 1 Player2
     [SerializeField]
-    private Sprite[] player1NameColor = new Sprite[7]; //0 Player1 , 1 Player2
+    private Sprite[] plateContents = new Sprite[7]; //0 Player1 , 1 Player2
     [SerializeField]
-    private Sprite[] player2NameColor = new Sprite[7]; //0 Player1 , 1 Player2
-    private Sprite[][] NameColors = new Sprite[2][];
+    private Sprite[] EXContents = new Sprite[7]; //0 Player1 , 1 Player2
     //[SerializeField]
     //private Sprite[] plateContents = new Sprite[7];
     //[SerializeField]
@@ -29,24 +28,25 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Image background;
     [SerializeField]
-    private UnityEngine.UI.Image videoback;
+    private UnityEngine.UI.Image videoContents;
     [SerializeField]
     private UnityEngine.UI.Image name;
     [SerializeField]
-    private UnityEngine.UI.Image videoName;
+    private UnityEngine.UI.Image contents;
+
     private void Awake()
     {
-        NameColors[0] = player1NameColor;
-        NameColors[1] = player2NameColor;
     }
 
     [SerializeField]
     private PlusButton btn;
     private void OnEnable()
     {
-        background.sprite = playerBackColor[(int)btn.currentCursor.playerNum];
-        videoback.sprite = playerBackColor[(int)btn.currentCursor.playerNum];
-        name.sprite = NameColors[(int)btn.currentCursor.playerNum][(int)btn.plateNum];
-        videoName.sprite = NameColors[(int)btn.currentCursor.playerNum][(int)btn.plateNum];
+        //background.sprite = playerBackColor[(int)btn.currentCursor.playerNum];
+        //videoback.sprite = playerBackColor[(int)btn.currentCursor.playerNum];
+        background.sprite = platePanel[(int)btn.plateNum];
+        contents.sprite = plateContents[(int)btn.plateNum];
+        videoContents.sprite = EXContents[(int)btn.plateNum];
+        //videoName.sprite = NameColors[(int)btn.currentCursor.playerNum][(int)btn.plateNum];
     }
 }
