@@ -52,7 +52,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public AccentControll accentControl;
     public VideoController videoController;
     public RectTransform particlePos;
-
+    public GameObject groundSound;
     public GameObject unReadyImage;
     public GameObject ReadyImage;
     private void Start()
@@ -106,6 +106,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         state = ButtonState.OntheMouse;
+        AudioManager.instance.Play("enterBtn");
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -123,7 +124,8 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
       
 
         currentCursor = eventData.pointerClick.GetComponent<LeapMouseCursor>();
-
+        AudioManager.instance.Play("click");
+    
         if (currentCursor.lastbtn != this)
         {
             //기존에 보던 패널이 있다면
@@ -161,8 +163,10 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void PlaySimulrator()
     {
         ReadyImage.SetActive(false);
-        AudioManager.instance.Play("groundMove");
         videoController.PlayVideo();
+        Debug.Log((float)videoController.videoPlayer.length);
+        
+        groundSound = AudioManager.instance.PlaySound("groundMove", (float)videoController.videoPlayer.length);
         currentCursor.cursorImage.DOFade(1, 0);
 
         ////todo 시뮬레이션 실행시 화살표없애기

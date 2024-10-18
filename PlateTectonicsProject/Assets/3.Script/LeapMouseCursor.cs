@@ -64,6 +64,12 @@ public class LeapMouseCursor : MonoBehaviour
     public Sprite palmSprite; // 손바닥 스프라이트
     public Sprite fistSprite; // 주먹 스프라이트
     private Tween currentTween; // 현재 진행 중인 트윈
+
+    private float cumulativeDistance = 0f;   // 누적된 거리
+    private float cumulativeYDistance = 0f;  // 누적된 Y축 거리
+    private float checkInterval = 0.1f;      // 매 0.1초마다 동작을 체크
+    private float lastCheckTime = 0f;        // 마지막으로 체크한 시간
+    private float motiondistance;
     void Start()
     {
 
@@ -169,7 +175,7 @@ public class LeapMouseCursor : MonoBehaviour
     private void MapHandToCursor(Hand hand)
     {
         Vector3 handPosition = hand.PalmPosition;
-        float motionSpeed = (3000 + (6000 * mouseSpeed));
+        float motionSpeed = (10000 + (20000 * mouseSpeed));
         int mouseX = (int)Mathf.Clamp(handPosition.x * motionSpeed, -Screen.width / 2, Screen.width / 2);
         int mouseY = (int)Mathf.Clamp((handPosition.y - (0.5f - handHeight)) * motionSpeed, -Screen.height / 2, Screen.height / 2);
         //Debug.Log("mouse" + mouseX + ", " + mouseY);
@@ -201,7 +207,6 @@ public class LeapMouseCursor : MonoBehaviour
         if (results.Count > 0)
         {
             GameObject targetObject = results[0].gameObject;
-            Debug.Log(targetObject.name);
             if(targetObject.name == "subBtn")
             {
                 targetObject = targetObject.transform.parent.gameObject;
@@ -246,12 +251,12 @@ public class LeapMouseCursor : MonoBehaviour
         // 클릭할 대상 오브젝트 감지
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         raycaster.Raycast(pointerEventData, raycastResults);
-        AudioManager.instance.Play("click");
 
         // + 버튼을 눌렀을때만. 시뮬레이션 버튼누를땐 따로 만들어야함
         GameObject clickedObject;
         if (raycastResults.Count > 0)
         {
+          
             IsHandsInitialized = false;
             if (raycastResults[0].gameObject.name == "subBtn")
             {
@@ -270,7 +275,7 @@ public class LeapMouseCursor : MonoBehaviour
             //누른 판넬 Rect AABB에 전달하기 , 판넬의 우선순위 전달하기
             ExecuteEvents.Execute(clickedObject, pointerEventData, ExecuteEvents.pointerClickHandler);
             if (lastbtn == null) return;
-            if(playerNum == 0)
+            if (playerNum == 0)
             {
                 AABBCollisionResolve.Instance.rectTransform1 = lastbtn.ExplanationUI.GetComponent<RectTransform>();
             }
@@ -285,54 +290,69 @@ public class LeapMouseCursor : MonoBehaviour
     }
     public void StandbySimulation(Hand hand, Frame frame)
     {
+        // 두 손을 가져옴
         Hand leftHand = frame.Hands[0];
         Hand rightHand = hand;
 
-        //두손바닥의 위치
+        // 두 손바닥의 위치
         Vector3 leftHandPosition = leftHand.PalmPosition;
         Vector3 rightHandPosition = rightHand.PalmPosition;
+
         // 두 손 사이의 거리 계산
-        float currentDistance = Vector3.Distance(leftHandPosition, rightHandPosition); //ZoomIn ZoomOut 판별을 위한 현재 두손사이의 거리
-        float currentYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z); // HandsUpDown을 판별하기 위한 현재 y거리
-                                                                                      // 이전 거리와 현재 거리를 비교하여 손이 멀어졌는지 판단
-        float motiondistance = 0.01f + (0.03f * motionSensitivity);
-        switch (lastbtn.handAction)
+        float currentDistance = Vector3.Distance(leftHandPosition, rightHandPosition);  // ZoomIn/ZoomOut
+        float currentYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);    // HandsMoveUpDown
+
+        // motionSensitivity에 따른 거리 민감도 조정
+        motiondistance = 0.01f + (0.03f * motionSensitivity);
+
+        // 두 손의 거리 차이 계산 (현재 거리와 이전 거리의 차이)
+        float distanceDelta = currentDistance - previousDistance;
+        float yDistanceDelta = currentYDistance - previousYDistance;
+
+        // 거리 변화량을 누적
+        //cumulativeDistance += Mathf.Abs(distanceDelta);
+        //cumulativeYDistance += Mathf.Abs(yDistanceDelta);
+        // 현재 시간을 기준으로 일정 시간 경과 시 동작을 체크
+        if (Time.time - lastCheckTime >= checkInterval)
         {
-            case PlusButton.HandAction.ZoomOut: //손이 가까워질때 : 수렴
-                if (currentDistance - previousDistance < -motiondistance)
-                {
-                    //두손이 가까워질때 실행되는 곳
-                    Debug.Log("수렴형 경계 : 손이 가까워짐");
-                    SimulationPlay();
-                    //StartCoroutine(SpawnParticle());
-                }
-                break;
-            case PlusButton.HandAction.ZoomIn: //손이멀어질때 : 발산
-                if (currentDistance - previousDistance > motiondistance)
-                {
-                    Debug.Log("발산형 경계 : 손이 멀어짐");
-                    SimulationPlay();
-                    //StartCoroutine(SpawnParticle());
-                    // 여기에 두 손이 멀어졌을 때 실행할 동작 추가 
-                }
-                break;
-            case PlusButton.HandAction.HandsMoveUpDown:  //손이위아래로멀어질때 : 보존
-                if (currentYDistance - previousYDistance > motiondistance*2)
-                {
-                    //양손이 위아래로 거리가 벌려질때
-                    Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
-                    SimulationPlay();
-                    //StartCoroutine(SpawnParticle());
-                }
-                break;
+            lastCheckTime = Time.time;
+
+            switch (lastbtn.handAction)
+            {
+                case PlusButton.HandAction.ZoomOut: // 손이 가까워질 때 : 수렴
+                    if (currentDistance < 0.3f * motionSensitivity)
+                    {
+                        Debug.Log("수렴형 경계 : 손이 가까워짐");
+                        SimulationPlay();
+                        cumulativeDistance = 0f;  // 누적 거리 초기화
+                    }
+                    break;
+
+                case PlusButton.HandAction.ZoomIn: // 손이 멀어질 때 : 발산
+                    if (currentDistance > 0.9f *motionSensitivity )
+                    {
+                        Debug.Log("발산형 경계 : 손이 멀어짐");
+                        SimulationPlay();
+                        cumulativeDistance = 0f;  // 누적 거리 초기화
+                    }
+                    break;
+
+                case PlusButton.HandAction.HandsMoveUpDown:  // 손이 위아래로 멀어질 때 : 보존
+                    if (currentYDistance > 0.4f*motionSensitivity )
+                    {
+                        Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
+                        SimulationPlay();
+                        cumulativeYDistance = 0f;  // 누적 Y축 거리 초기화
+                    }
+                    break;
+            }
         }
-
-
-
 
         // 현재 거리를 이전 거리로 업데이트
         previousDistance = currentDistance;
+        previousYDistance = currentYDistance;
     }
+
     public void UpdateCursorState(ActionState state)
     {
         actionState = state;
@@ -349,6 +369,7 @@ public class LeapMouseCursor : MonoBehaviour
         previousDistance = Vector3.Distance(leftHandPosition, rightHandPosition);
         previousYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);
         IsHandsInitialized = true;
+        AudioManager.instance.Play("enterHand");
         lastbtn.ReadySimulrator(true);
         isTrigger = false;
     }

@@ -4973,10 +4973,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leapServiceProvider: {fileID: 191788311}
-  OffTime: 30
+  OffTime: 20
   timer: 0
   actionState: 0
-  playerNum: 1
+  playerNum: 0
   cursorObject: {fileID: 902520980}
   raycaster: {fileID: 591147004}
   lastbtn: {fileID: 0}
@@ -7070,7 +7070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leapServiceProvider: {fileID: 317231800}
-  OffTime: 30
+  OffTime: 20
   timer: 0
   actionState: 0
   playerNum: 0
@@ -8751,8 +8751,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jsondata:
-    P1SerialNum: 
-    P2SerialNum: 
+    P1SerialNum: LE510000200000EB30-6710-0000000000
+    P2SerialNum: 'LE510000200000EB1D-6710-0000000000 '
     handHeight: 0.3
     handStability: 0.5
     motionSensitivity: 0.5
@@ -8817,14 +8817,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: groundMove
-    clip: {fileID: 8300000, guid: 883fe090cc73cd54d938b3e82afa8c00, type: 3}
-    volume: 0.5
-    pitch: 0
+    clip: {fileID: 8300000, guid: 40dcc14bafbd1544db5acd89a2b9ccd2, type: 3}
+    volume: 0.2
+    pitch: 1
     loop: 0
   - name: click
     clip: {fileID: 8300000, guid: 22b37c2787a54684c880da0b1890f2c0, type: 3}
     volume: 0.5
-    pitch: 0
+    pitch: 1
+    loop: 0
+  - name: enterBtn
+    clip: {fileID: 8300000, guid: e91c40c2086559e49b35a5ef83f2c057, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+  - name: enterHand
+    clip: {fileID: 8300000, guid: 45bcda3c03860eb438d337612073ff27, type: 3}
+    volume: 0.5
+    pitch: 1
     loop: 0
 --- !u!1 &1730362902
 GameObject:

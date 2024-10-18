@@ -36,13 +36,13 @@ public class SceneManager : MonoBehaviour
             {
                 if (player2_cursor.actionState == ActionState.Off)
                 {
-                    //if (!isTutorialActive)
-                    //{
+                    if (!isTutorialActive)
+                    {
 
-                    //    StartCoroutine(ShowTutorialThenDeactivate(player1_cursor));
-                    //}
-                    SetActiveStandbyScreen(false);
-                    SetActivePlayer(player1_cursor);
+                        StartCoroutine(ShowTutorialThenDeactivate(player1_cursor));
+                    }
+                    //SetActiveStandbyScreen(false);
+                    //SetActivePlayer(player1_cursor);
 
                 }
                 else
@@ -58,13 +58,13 @@ public class SceneManager : MonoBehaviour
             {
                 if(player1_cursor.actionState == ActionState.Off)
                 {
-                    //if (!isTutorialActive)
-                    //{
+                    if (!isTutorialActive)
+                    {
 
-                    //    StartCoroutine(ShowTutorialThenDeactivate(player2_cursor));
-                    //}
-                    SetActiveStandbyScreen(false);
-                    SetActivePlayer(player2_cursor);
+                        StartCoroutine(ShowTutorialThenDeactivate(player2_cursor));
+                    }
+                    //SetActiveStandbyScreen(false);
+                    //SetActivePlayer(player2_cursor);
 
                 }
                 else
@@ -94,6 +94,7 @@ public class SceneManager : MonoBehaviour
     private void SetActivePlayer(LeapMouseCursor player)
     {
         player.gameObject.SetActive(true);
+        AudioManager.instance.Play("enterHand");
         player.UpdateCursorState(ActionState.Idle);
     }
     private IEnumerator ShowTutorialThenDeactivate(LeapMouseCursor player)
@@ -107,7 +108,7 @@ public class SceneManager : MonoBehaviour
         tutorialScreen.SetActive(true);
 
         // 5초 대기
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
 
         // 튜토리얼 화면 비활성화
         

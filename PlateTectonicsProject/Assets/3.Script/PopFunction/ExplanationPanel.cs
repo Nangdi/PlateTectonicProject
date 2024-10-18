@@ -57,6 +57,10 @@ public class ExplanationPanel : MonoBehaviour
         btn.currentCursor.cursorImage.DOFade(1, 0);
         //IsPlay = false;
         timer = 0;
+        if (btn.groundSound)
+        {
+            Destroy(btn.groundSound);
+        }
         
     }
     public void Play()

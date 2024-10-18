@@ -45,12 +45,17 @@ public class AudioManager : MonoBehaviour
             soundDictionary.Add(sound.name, source);
         }
     }
-
+    public void SetGlobalVolume(float volume)
+    {
+        // volume이 0.0에서 1.0 사이의 값인지 확인
+        AudioListener.volume = Mathf.Clamp(volume, 0f, 1f);
+    }
     // 특정 사운드 재생
     public void Play(string soundName)
     {
         if (soundDictionary.ContainsKey(soundName))
         {
+        Debug.Log(soundName);
             soundDictionary[soundName].Play();
         }
         else
@@ -83,5 +88,34 @@ public class AudioManager : MonoBehaviour
         {
             Debug.LogWarning($"사운드 {soundName}을(를) 찾을 수 없습니다!");
         }
+    }
+    public GameObject PlaySound(string soundName , float time)
+    {
+        AudioClip clip = soundDictionary[soundName].clip;
+        // 새로운 GameObject 생성
+        GameObject audioObject = new GameObject("AudioSource");
+        AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+        audioSource.clip = clip;
+        audioSource.Play();
+        StartCoroutine(FadeOut(audioSource, time));
+        // 사운드가 재생된 후 오브젝트를 제거 (사운드가 끝난 후)
+        Destroy(audioObject, time);
+        return audioObject;
+    }
+    private IEnumerator FadeOut(AudioSource audioSource, float fadeTime)
+    {
+        float startVolume = audioSource.volume;
+
+        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        {
+            audioSource.volume = Mathf.Lerp(startVolume, 0, t / fadeTime);
+            yield return null; // 다음 프레임까지 대기
+        }
+        if (audioSource == null)
+        {
+            yield break; // 코루틴 종료
+        }
+        audioSource.volume = 0; // 최종적으로 볼륨을 0으로 설정
+        audioSource.Stop(); // 사운드 정지
     }
 }
