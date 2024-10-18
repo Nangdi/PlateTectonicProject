@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Leap;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,22 +57,6 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public GameObject ReadyImage;
     private void Start()
     {
-        for (int i = 0; i < interaction.transform.childCount; i++) {
-
-            if (!interaction.transform.GetChild(i).gameObject.activeSelf)
-            {
-                continue;
-            }
-            for (int j = 0; j < interaction.transform.GetChild(i).childCount; j++)
-            {
-               
-                if (interaction.transform.GetChild(i).GetChild(j).TryGetComponent<CollisioEffect>(out CollisioEffect effect))
-                {
-                    effects.Add(effect);
-                }
-               
-            }
-        }
     }
 
     private void OnEnable()
@@ -129,7 +114,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (ExplanationUI.activeSelf)
+        if (ExplanationUI.activeSelf || accentControl.gameObject.activeSelf)
         {
             Debug.Log("이미활성화된 버튼입니다.");
             return;
@@ -152,7 +137,12 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
            
         }
-        
+        if(accentControl.accentSequence != null && accentControl.accentSequence.IsActive())
+        {
+            accentControl.accentSequence.Kill();
+        }
+
+
         currentCursor.lastbtn = this;
         //accentControl.gameObject.SetActive(true);
         //여기서 화살표 켜주기? or 설명판넬 닫힐때 켜주기 or 두손이 모두 인식됐을때 화살표 켜주기 
@@ -170,9 +160,11 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     public void PlaySimulrator()
     {
-        videoController.PlayVideo();
-
         ReadyImage.SetActive(false);
+        AudioManager.instance.Play("groundMove");
+        videoController.PlayVideo();
+        currentCursor.cursorImage.DOFade(1, 0);
+
         ////todo 시뮬레이션 실행시 화살표없애기
         //for (int i = 0; i < effects.Count; i++)
         //{

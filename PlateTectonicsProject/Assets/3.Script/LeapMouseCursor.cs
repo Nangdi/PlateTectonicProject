@@ -57,20 +57,26 @@ public class LeapMouseCursor : MonoBehaviour
     public GameObject prefab;
     public RectTransform spawnPos;
     public Transform particlePool;
-    private Coroutine HandDetectCo;
+    private bool isTrigger;
+
+    //손바닥쥐는 애니메이션 변수들
+    public UnityEngine.UI.Image cursorImage;
+    public Sprite palmSprite; // 손바닥 스프라이트
+    public Sprite fistSprite; // 주먹 스프라이트
+    private Tween currentTween; // 현재 진행 중인 트윈
     void Start()
     {
 
         cursorRect = GetComponent<RectTransform>();
-
+        cursorImage = GetComponent<UnityEngine.UI.Image>();
         // playecursor 상태 초기화 : off상태시작
         UpdateCursorState(ActionState.Off);
         gameObject.SetActive(false);
-        clickSequence = DOTween.Sequence();
+        //clickSequence = DOTween.Sequence();
 
-        // Append: 순차적으로 실행 (첫 번째 애니메이션이 끝나고 두 번째가 실행됨)
-        clickSequence.Append(cursorObject.transform.DOScale(0.5f, 0.2f));  // 그 후에 1초 동안 스케일을 0.5로 줄임
-        clickSequence.Append(cursorObject.transform.DOScale(1, 0.2f));  // 그 후에 1초 동안 스케일을 0.5로 줄임
+        //// Append: 순차적으로 실행 (첫 번째 애니메이션이 끝나고 두 번째가 실행됨)
+        //clickSequence.Append(cursorObject.transform.DOScale(0.5f, 0.2f));  // 그 후에 1초 동안 스케일을 0.5로 줄임
+        //clickSequence.Append(cursorObject.transform.DOScale(1, 0.2f));  // 그 후에 1초 동안 스케일을 0.5로 줄임
 
 
     }
@@ -97,19 +103,24 @@ public class LeapMouseCursor : MonoBehaviour
             //버튼을 클릭하고 손두개가 인식되어 있을때
             if(actionState == ActionState.Select && frame.Hands.Count == 2)
             {
+
                 if (IsHandsInitialized)
                 {
                     StandbySimulation(hand, frame);
                 }
                 else
                 {
-                    StartCoroutine(InitializeHands(frame.Hands[0], frame.Hands[1]));
+                    if (!isTrigger)
+                    {
+                        isTrigger = true;
+                        StartCoroutine(InitializeHands(frame.Hands[0], frame.Hands[1]));
+                    }
                 }
             }
             else
             {
                 IsHandsInitialized = false;
-                if(lastbtn != null && actionState == ActionState.Select)
+                if (lastbtn != null && actionState == ActionState.Select)
                 {
                     lastbtn.ReadySimulrator(false);
                 }
@@ -125,6 +136,12 @@ public class LeapMouseCursor : MonoBehaviour
             if (lastbtn != null && actionState == ActionState.Select)
             {
                 lastbtn.ReadySimulrator(false);
+               
+            }
+            else
+            {
+              
+              
             }
             timer += Time.deltaTime;
             if (timer > OffTime)
@@ -184,7 +201,11 @@ public class LeapMouseCursor : MonoBehaviour
         if (results.Count > 0)
         {
             GameObject targetObject = results[0].gameObject;
-
+            Debug.Log(targetObject.name);
+            if(targetObject.name == "subBtn")
+            {
+                targetObject = targetObject.transform.parent.gameObject;
+            }
             // PointerEnter 이벤트 발생
             if (lastObject != targetObject)
             {
@@ -225,20 +246,30 @@ public class LeapMouseCursor : MonoBehaviour
         // 클릭할 대상 오브젝트 감지
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         raycaster.Raycast(pointerEventData, raycastResults);
-
+        AudioManager.instance.Play("click");
 
         // + 버튼을 눌렀을때만. 시뮬레이션 버튼누를땐 따로 만들어야함
+        GameObject clickedObject;
         if (raycastResults.Count > 0)
         {
             IsHandsInitialized = false;
+            if (raycastResults[0].gameObject.name == "subBtn")
+            {
+                clickedObject = raycastResults[0].gameObject.transform.parent.gameObject;
+            }
+            else
+            {
+            clickedObject = raycastResults[0].gameObject;
+
+            }
             // 감지된 버튼 가져오기
-            GameObject clickedObject = raycastResults[0].gameObject;
             //클릭이벤트 발생
 
             //+버튼을 눌럿을때와 시뮬레이션 버튼을 눌렀을때의 기능을 나눠야할거같음
 
             //누른 판넬 Rect AABB에 전달하기 , 판넬의 우선순위 전달하기
             ExecuteEvents.Execute(clickedObject, pointerEventData, ExecuteEvents.pointerClickHandler);
+            if (lastbtn == null) return;
             if(playerNum == 0)
             {
                 AABBCollisionResolve.Instance.rectTransform1 = lastbtn.ExplanationUI.GetComponent<RectTransform>();
@@ -286,7 +317,7 @@ public class LeapMouseCursor : MonoBehaviour
                 }
                 break;
             case PlusButton.HandAction.HandsMoveUpDown:  //손이위아래로멀어질때 : 보존
-                if (currentYDistance - previousYDistance > motiondistance)
+                if (currentYDistance - previousYDistance > motiondistance*2)
                 {
                     //양손이 위아래로 거리가 벌려질때
                     Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
@@ -319,6 +350,7 @@ public class LeapMouseCursor : MonoBehaviour
         previousYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);
         IsHandsInitialized = true;
         lastbtn.ReadySimulrator(true);
+        isTrigger = false;
     }
     //시뮬레이션 종료후 부르는 비디오판넬 
     public void SimulationPlay()
@@ -327,15 +359,23 @@ public class LeapMouseCursor : MonoBehaviour
         IsHandsInitialized = false;
         lastbtn.PlaySimulrator();
     }
-    //public void ClickAni()
-    //{
-    //    // 기존 애니메이션이 있으면 제거
-    //    cursorObject.transform.DOKill();
+    public void ChangeToFist()
+    {
+        // 현재 트윈이 실행 중이면 취소
+        if (currentTween != null && currentTween.IsActive())
+        {
+            currentTween.Kill(); // 진행 중인 트윈 취소
+        }
 
-    //    // 스케일을 1로 즉시 초기화
-    //    cursorObject.transform.localScale = Vector3.one;
-    //    cursorObject.transform.DOScale(0.5f, 0.1f).SetLoops(2, LoopType.Yoyo);
-    //}
+        // 주먹으로 스프라이트 변경
+        cursorImage.sprite = fistSprite;
+
+        // 0.3초 후 손바닥으로 다시 변경하는 트윈 실행
+        currentTween = DOVirtual.DelayedCall(0.3f, () =>
+        {
+            cursorImage.sprite = palmSprite;
+        });
+    }
     public void ParticleRing()
     {
 

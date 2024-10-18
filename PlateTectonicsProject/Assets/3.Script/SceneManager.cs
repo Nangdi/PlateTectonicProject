@@ -15,7 +15,9 @@ public class SceneManager : MonoBehaviour
 
     [SerializeField]
     private GameObject standbyScreen;
-
+    [SerializeField]
+    private GameObject tutorialScreen;
+    private bool isTutorialActive;
     public static SceneManager sceneManager;
     private void Awake()
     {
@@ -30,23 +32,55 @@ public class SceneManager : MonoBehaviour
         bool IsMouseActivity = (mouseX != 0 || mouseY != 0);
         if (frame1.Hands.Count > 0 || IsMouseActivity)
         {
-            if (!player1_cursor.gameObject.activeSelf )
+            if (!player1_cursor.gameObject.activeSelf)
             {
-                SetActivePlayer(player1_cursor);
+                if (player2_cursor.actionState == ActionState.Off)
+                {
+                    //if (!isTutorialActive)
+                    //{
+
+                    //    StartCoroutine(ShowTutorialThenDeactivate(player1_cursor));
+                    //}
+                    SetActiveStandbyScreen(false);
+                    SetActivePlayer(player1_cursor);
+
+                }
+                else
+                {
+                    SetActiveStandbyScreen(false);
+                    SetActivePlayer(player1_cursor);
+                }
             }
         }
         if (frame2.Hands.Count > 0 )
         {
             if (!player2_cursor.gameObject.activeSelf)
             {
-                SetActivePlayer(player2_cursor);
+                if(player1_cursor.actionState == ActionState.Off)
+                {
+                    //if (!isTutorialActive)
+                    //{
+
+                    //    StartCoroutine(ShowTutorialThenDeactivate(player2_cursor));
+                    //}
+                    SetActiveStandbyScreen(false);
+                    SetActivePlayer(player2_cursor);
+
+                }
+                else
+                {
+                    SetActiveStandbyScreen(false);
+                    SetActivePlayer(player2_cursor);
+                }
             }
+          
+          
 
         }
         if (player1_cursor.actionState ==ActionState.Off && player2_cursor.actionState == ActionState.Off)
         {
             //대기화면 키기
-            //SetActiveStandbyScreen(true);
+            SetActiveStandbyScreen(true);
         }
 
     }
@@ -59,10 +93,27 @@ public class SceneManager : MonoBehaviour
     }
     private void SetActivePlayer(LeapMouseCursor player)
     {
-        SetActiveStandbyScreen(false);
         player.gameObject.SetActive(true);
         player.UpdateCursorState(ActionState.Idle);
     }
+    private IEnumerator ShowTutorialThenDeactivate(LeapMouseCursor player)
+    {
+        isTutorialActive = true;  // 튜토리얼이 실행 중임을 표시
 
+        // 대기 화면 비활성화
+        SetActiveStandbyScreen(false);
+        SetActivePlayer(player);
+        // 튜토리얼 화면 활성화
+        tutorialScreen.SetActive(true);
+
+        // 5초 대기
+        yield return new WaitForSeconds(5f);
+
+        // 튜토리얼 화면 비활성화
+        
+        tutorialScreen.SetActive(false);
+
+        isTutorialActive = false;  // 튜토리얼이 종료됨을 표시
+    }
 
 }

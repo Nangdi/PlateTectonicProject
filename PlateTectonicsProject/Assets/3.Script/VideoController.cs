@@ -11,10 +11,12 @@ public class VideoController : MonoBehaviour
 
     [SerializeField]
     private ExplanationPanel explanationPanel;
+    private ChangeColorUIByPlayerNum changeColorUIByPlayerNum;
     private int videoCount =0;
 
     void Start()
     {
+        changeColorUIByPlayerNum = explanationPanel.GetComponent<ChangeColorUIByPlayerNum>();
         // 비디오가 시작할 때 정지
         PlayPreviusVideo();
     }
@@ -43,6 +45,9 @@ public class VideoController : MonoBehaviour
         // 비디오 끝났을 때 호출
         videoPlayer.Stop(); // 현재 비디오 정지
         videoPlayer.clip = nextVideo; // 다음 비디오 클립으로 변경
+        changeColorUIByPlayerNum.contents.gameObject.SetActive(false);
+        changeColorUIByPlayerNum.videoContents.gameObject.SetActive(true);
+        //컨텐츠 교체
         PlayNextVideo(); // 다음 비디오 재생
     }
 

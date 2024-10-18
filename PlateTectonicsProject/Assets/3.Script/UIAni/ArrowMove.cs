@@ -8,14 +8,16 @@ public class ArrowMove : MonoBehaviour
 {
 
     private RectTransform rectTransform;
-    private Tween moveTween;
+    public Tween moveTween;
     public float moveDistance = 15f;
     public float moveCycle = 3f;
     public bool isAutoDir = true;
     public Vector3 dir = Vector2.right;
-    private void Awake()
+    private Vector3 originPos;
+    protected virtual void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        originPos = transform.localPosition;
         if (isAutoDir)
         {
             AutoMoveArrow();
@@ -30,12 +32,12 @@ public class ArrowMove : MonoBehaviour
     private void OnEnable()
     {
 
-        if (moveTween != null)
-        {
+        //if (moveTween != null)
+        //{
 
-            moveTween.Play();
+        //    moveTween.Play();
 
-        }
+        //}
     }
   
     public void AutoMoveArrow()
@@ -48,6 +50,7 @@ public class ArrowMove : MonoBehaviour
 
         // 화살표가 가리키는 방향 계산 (단위 벡터)
         Vector3 direction = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0);
+        transform.localPosition = originPos;
 
         // DoLocalMove를 통해 해당 방향으로 이동
         moveTween = transform.DOLocalMove(transform.localPosition + direction * moveDistance, moveCycle).SetLoops(-1, LoopType.Restart);
@@ -57,8 +60,8 @@ public class ArrowMove : MonoBehaviour
     {
         moveTween = transform.DOLocalMove(transform.localPosition + dir * moveDistance, moveCycle).SetLoops(-1, LoopType.Restart);
     }
-    private void OnDisable()
-    {
-        moveTween.Pause();
-    }
+    //private void OnDisable()
+    //{
+    //    moveTween.Pause();
+    //}
 }

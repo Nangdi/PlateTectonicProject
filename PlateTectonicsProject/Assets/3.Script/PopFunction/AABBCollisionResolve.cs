@@ -139,6 +139,7 @@ public class AABBCollisionResolve : MonoBehaviour
     }
     public void CheckOverLab()
     {
+        Debug.Log("콜백불림");
         if (IsAABBCollision(rectTransform1, rectTransform2))
         {
             CarculatePriorities();

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,7 +14,7 @@ public class ExplanationPanel : MonoBehaviour
     public GameObject videoPanel;
     public VideoPlayer VideoPlayer;
     private float timer = 0f;
-    private float playerTime = 10f;
+    private float playerTime = 30f;
     private bool IsPlay;
     public int priorityIndex;
     private Vector3 currentPos;
@@ -53,6 +54,7 @@ public class ExplanationPanel : MonoBehaviour
       
         //videoPanel.gameObject.SetActive(false);
         btn.currentCursor.UpdateCursorState(ActionState.Idle);
+        btn.currentCursor.cursorImage.DOFade(1, 0);
         //IsPlay = false;
         timer = 0;
         
