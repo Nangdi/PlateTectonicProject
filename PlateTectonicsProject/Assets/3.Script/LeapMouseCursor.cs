@@ -320,7 +320,7 @@ public class LeapMouseCursor : MonoBehaviour
             switch (lastbtn.handAction)
             {
                 case PlusButton.HandAction.ZoomOut: // 손이 가까워질 때 : 수렴
-                    if (currentDistance < 0.3f * motionSensitivity)
+                    if (currentDistance < 0.05f +((0.2f-0.05f) * motionSensitivity)) // .15
                     {
                         Debug.Log("수렴형 경계 : 손이 가까워짐");
                         SimulationPlay();
@@ -328,8 +328,8 @@ public class LeapMouseCursor : MonoBehaviour
                     }
                     break;
 
-                case PlusButton.HandAction.ZoomIn: // 손이 멀어질 때 : 발산
-                    if (currentDistance > 0.9f *motionSensitivity )
+                case PlusButton.HandAction.ZoomIn: // 손이 멀어질 때 : 발산 0.45
+                    if (currentDistance > 0.2+((0.5f-0.2f) *motionSensitivity) )
                     {
                         Debug.Log("발산형 경계 : 손이 멀어짐");
                         SimulationPlay();
@@ -338,7 +338,7 @@ public class LeapMouseCursor : MonoBehaviour
                     break;
 
                 case PlusButton.HandAction.HandsMoveUpDown:  // 손이 위아래로 멀어질 때 : 보존
-                    if (currentYDistance > 0.4f*motionSensitivity )
+                    if (currentYDistance > 0.1+ ((0.3-0.1)*motionSensitivity) )
                     {
                         Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
                         SimulationPlay();

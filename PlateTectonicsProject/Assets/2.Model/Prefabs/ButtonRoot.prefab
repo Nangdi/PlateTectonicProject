@@ -942,6 +942,7 @@ MonoBehaviour:
   accentControl: {fileID: 2691679665240685532}
   videoController: {fileID: 3254356144180771787}
   particlePos: {fileID: 2835125968581811862}
+  groundSound: {fileID: 0}
   unReadyImage: {fileID: 8265364105124908272}
   ReadyImage: {fileID: 923332228048094129}
 --- !u!212 &4107933358841520426
@@ -1682,7 +1683,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6177999704424016100
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2065,7 +2066,7 @@ RectTransform:
   m_GameObject: {fileID: 8265364105124908272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6506479941778418166}
@@ -2074,7 +2075,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -194}
+  m_AnchoredPosition: {x: 21, y: -283}
   m_SizeDelta: {x: 433, y: 47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5497515597452396474

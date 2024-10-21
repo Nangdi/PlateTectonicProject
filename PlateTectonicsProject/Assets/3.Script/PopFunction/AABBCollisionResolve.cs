@@ -38,7 +38,7 @@ public class AABBCollisionResolve : MonoBehaviour
     bool IsAABBCollision(RectTransform rect1, RectTransform rect2)
     {
         //둘중 하나라도 선택되지 않았거나 , 둘중 하나라도 active가 false 면 겹치지 않은걸로 판정 
-        if ((rect1 == null || rect2 == null) || (!rect1.gameObject.activeSelf || !rect2.gameObject.activeSelf)) return false;
+        if ((rect1 == null || rect2 == null) || (!rect1.gameObject.activeSelf || !rect2.gameObject.activeSelf)|| (rect1.gameObject == rect2.gameObject)) return false;
         Rect rect1World = GetWorldRect(rect1);
         Rect rect2World = GetWorldRect(rect2);
         if (rect1World.max.x < rect2World.min.x || // rect1의 오른쪽이 rect2의 왼쪽보다 왼쪽에 있음
