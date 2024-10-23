@@ -55,6 +55,8 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public GameObject groundSound;
     public GameObject unReadyImage;
     public GameObject ReadyImage;
+    public GameObject okOb;
+    //private Tween cirTween;
     private void Start()
     {
     }
@@ -82,6 +84,28 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             case ButtonState.ClickButton:
                 break;
         }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            
+            ReadySimulrator(true);
+
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            PlaySimulrator();
+            
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            accentControl.PlayAccent();
+
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+
+            ReadySimulrator(false);
+
+        }
     }
 
    //버튼클릭했을때 ClickButton으로 변경
@@ -107,11 +131,16 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         state = ButtonState.OntheMouse;
         AudioManager.instance.Play("enterBtn");
+        //원이 커지게
+        accentControl.cir.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         state = ButtonState.Idle;
+
+        accentControl.cir.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+
     }
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -163,11 +192,9 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void PlaySimulrator()
     {
         ReadyImage.SetActive(false);
-        videoController.PlayVideo();
-        Debug.Log((float)videoController.videoPlayer.length);
-        
-        groundSound = AudioManager.instance.PlaySound("groundMove", (float)videoController.videoPlayer.length);
-        currentCursor.cursorImage.DOFade(1, 0);
+        okOb.SetActive(true);
+    
+        //currentCursor.cursorImage.DOFade(1, 0);
 
         ////todo 시뮬레이션 실행시 화살표없애기
         //for (int i = 0; i < effects.Count; i++)
@@ -175,11 +202,22 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         //    effects[i].PlaySimulator();
         //}
     }
+    public void VideoStart()
+    {
+        videoController.PlayVideo();
+        float soundLength = (float)videoController.videoPlayer.length * 2;
+        Debug.Log((float)videoController.videoPlayer.length *2);
+
+        groundSound = AudioManager.instance.PlaySound("groundMove", soundLength);
+    }
     public void ReadySimulrator(bool _isReady)
     {
         //if (arrowHand.activeSelf == _isReady) return;
         unReadyImage.gameObject.SetActive(!_isReady); //준비되면꺼주기 안되면 키기
         ReadyImage.SetActive(_isReady); //준비되면켜주기 안되면 끄기
+        video.gameObject.SetActive(_isReady);
+
+
     }
     private void OnDisable()
     {

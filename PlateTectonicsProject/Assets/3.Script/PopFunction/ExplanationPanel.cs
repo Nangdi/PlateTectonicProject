@@ -26,7 +26,7 @@ public class ExplanationPanel : MonoBehaviour
     {
         btn.ReadySimulrator(false);
 
-        if (priorityIndex != 1)
+        if (priorityIndex == 3)
         {
             priorityIndex = 2;
 
@@ -35,33 +35,34 @@ public class ExplanationPanel : MonoBehaviour
     }
     private void Update()
     {
-        if (btn.currentCursor.actionState == ActionState.Select)
-        {
-            timer += Time.deltaTime;
-            if (timer >= playerTime)
-            {
-                //VideoPlayer.time = 0f;
-                //VideoPlayer.frame = 0;
-                ////VideoPlayer.targetTexture.format
-                //videoPanel.SetActive(false);
-                gameObject.SetActive(false);
-            }
+        //if (btn.currentCursor.actionState == ActionState.Select)
+        //{
+        //    timer += Time.deltaTime;
+        //    if (timer >= playerTime)
+        //    {
+        //        //VideoPlayer.time = 0f;
+        //        //VideoPlayer.frame = 0;
+        //        ////VideoPlayer.targetTexture.format
+        //        //videoPanel.SetActive(false);
+        //        gameObject.SetActive(false);
+        //    }
 
-        }
+        //}
     }
     private void OnDisable()
     {
       
+        Debug.Log("악센트효과제거");
+        btn.accentControl.StopAccent();
         //videoPanel.gameObject.SetActive(false);
         btn.currentCursor.UpdateCursorState(ActionState.Idle);
-        btn.currentCursor.cursorImage.DOFade(1, 0);
+        //btn.currentCursor.cursorImage.DOFade(1, 0);
         //IsPlay = false;
         timer = 0;
         if (btn.groundSound)
         {
             Destroy(btn.groundSound);
         }
-        
     }
     public void Play()
     {

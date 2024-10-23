@@ -12,7 +12,7 @@ public class AccentControll : MonoBehaviour
     [SerializeField]
     private Image accentPanel;
     [SerializeField]
-    private GameObject cir;
+    public GameObject cir;
     [SerializeField]
     private AccentArrowMove arrow1;
     [SerializeField]
@@ -35,7 +35,7 @@ public class AccentControll : MonoBehaviour
         //accentPanel 투명 0 초기화
         // arrow 원래크기로 초기화
         accentPanel.DOFade(0f, 0f);
-        cir.transform.localScale = cir.transform.localScale = originScale;
+        //cir.transform.localScale = cir.transform.localScale = originScale;
         //PlayAccent();
     }
     //판넬 페이드인 아웃
@@ -44,11 +44,11 @@ public class AccentControll : MonoBehaviour
     {
         gameObject.SetActive(true);
         accentSequence = DOTween.Sequence();
-        accentSequence.Append(cir.transform.DOScale(targetScale, 1))
+        accentSequence/*.Append(cir.transform.DOScale(targetScale, 1))*/
             .Join(DOVirtual.DelayedCall(0, () => arrow1.AutoMoveArrow()))
             .Join(DOVirtual.DelayedCall(0, () => arrow2.AutoMoveArrow()))
-            .Join(accentPanel.DOFade(1f, 1f).SetLoops(3, LoopType.Yoyo))
-            .OnComplete(() => CompleteAni());
+            .Join(accentPanel.DOFade(1f, 1f).SetLoops(300, LoopType.Yoyo))
+            .Insert(3f, DOVirtual.DelayedCall(0, () => CompleteAni()));//
     }
     public void StopAccent()
     {
@@ -65,21 +65,21 @@ public class AccentControll : MonoBehaviour
     }
     private void CompleteAni()
     {
-        if (arrow1.moveTween != null && arrow2.moveTween != null)
-        {
-            arrow1.moveTween.Kill();
-            arrow2.moveTween.Kill();
-        }
-        Debug.Log("온컴플리트");
-        gameObject.SetActive(false);
+        //if (arrow1.moveTween != null && arrow2.moveTween != null)
+        //{
+        //    arrow1.moveTween.Kill();
+        //    arrow2.moveTween.Kill();
+        //}
+        //Debug.Log("온컴플리트");
+        //gameObject.SetActive(false);
         //todo 화살표 Acrive 켜주기
       
         plusBtn.SetExplanationUI(true);
-        plusBtn.currentCursor.cursorImage.DOFade(0, 0);
+        //plusBtn.currentCursor.cursorImage.DOFade(0, 0);
     }
     private void OnDisable()
     {
-        cir.transform.DOScale(1, 1);
+        //cir.transform.DOScale(1, 1);
     }
 
 

@@ -8,7 +8,7 @@ public class CloseBtn : MonoBehaviour, IPointerClickHandler
     [SerializeField] private PlusButton plusButton;
     public void OnPointerClick(PointerEventData eventData)
     {
-        plusButton.currentCursor.UpdateCursorState(ActionState.Idle);
         plusButton.SetExplanationUI(false);
+        plusButton.currentCursor.UpdateCursorState(ActionState.Idle);
     }
 }

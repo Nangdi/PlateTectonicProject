@@ -371,6 +371,7 @@ public class LeapMouseCursor : MonoBehaviour
         IsHandsInitialized = true;
         AudioManager.instance.Play("enterHand");
         lastbtn.ReadySimulrator(true);
+
         isTrigger = false;
     }
     //시뮬레이션 종료후 부르는 비디오판넬 

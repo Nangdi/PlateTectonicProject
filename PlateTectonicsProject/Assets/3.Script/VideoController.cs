@@ -24,6 +24,7 @@ public class VideoController : MonoBehaviour
     {
         videoCount = 0;
         PlayPreviusVideo();
+       
     }
     public void PlayVideo()
     {
@@ -37,6 +38,7 @@ public class VideoController : MonoBehaviour
     private void OnVideoEnd(VideoPlayer vp)
     {
         videoCount++;
+        Debug.Log(videoCount);
         if(videoCount == 2)
         {
             explanationPanel.gameObject.SetActive(false);
@@ -44,23 +46,26 @@ public class VideoController : MonoBehaviour
         }
         // 비디오 끝났을 때 호출
         videoPlayer.Stop(); // 현재 비디오 정지
-        videoPlayer.clip = nextVideo; // 다음 비디오 클립으로 변경
-        changeColorUIByPlayerNum.contents.gameObject.SetActive(false);
-        changeColorUIByPlayerNum.videoContents.gameObject.SetActive(true);
+        
         //컨텐츠 교체
-        PlayNextVideo(); // 다음 비디오 재생
+        StartCoroutine( PlayNextVideo()); // 다음 비디오 재생
     }
 
-    private void PlayNextVideo()
+    private IEnumerator PlayNextVideo()
     {
      
+        yield return new WaitForSeconds(3f);
+        changeColorUIByPlayerNum.contents.gameObject.SetActive(false);
+        changeColorUIByPlayerNum.videoContents.gameObject.SetActive(true);
         videoPlayer.clip = nextVideo;
+        videoPlayer.playbackSpeed = 1f;
         // 다음 비디오 재생
         videoPlayer.Play();
     }
     private void PlayPreviusVideo()
     {
         videoPlayer.clip = previusVideo;
+        videoPlayer.playbackSpeed = 0.5f;
         // 다음 비디오 재생
         videoPlayer.Pause();
     }

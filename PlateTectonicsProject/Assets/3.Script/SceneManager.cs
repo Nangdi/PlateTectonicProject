@@ -34,44 +34,46 @@ public class SceneManager : MonoBehaviour
         {
             if (!player1_cursor.gameObject.activeSelf)
             {
-                if (player2_cursor.actionState == ActionState.Off)
-                {
-                    if (!isTutorialActive)
-                    {
+                //if (player2_cursor.actionState == ActionState.Off)
+                //{
+                //    //if (!isTutorialActive)
+                //    //{
 
-                        StartCoroutine(ShowTutorialThenDeactivate(player1_cursor));
-                    }
-                    //SetActiveStandbyScreen(false);
-                    //SetActivePlayer(player1_cursor);
+                //    //    StartCoroutine(ShowTutorialThenDeactivate(player1_cursor));
+                //    //}
+                //    SetActiveStandbyScreen(false);
+                //    SetActivePlayer(player1_cursor);
 
-                }
-                else
-                {
-                    SetActiveStandbyScreen(false);
-                    SetActivePlayer(player1_cursor);
-                }
+                //}
+                //else
+                //{
+                //    SetActiveStandbyScreen(false);
+                //    SetActivePlayer(player1_cursor);
+                //}
+                SetActiveStandbyScreen(false);
+                SetActivePlayer(player1_cursor);
             }
         }
         if (frame2.Hands.Count > 0 )
         {
             if (!player2_cursor.gameObject.activeSelf)
             {
-                if(player1_cursor.actionState == ActionState.Off)
-                {
-                    if (!isTutorialActive)
-                    {
+                //if(player1_cursor.actionState == ActionState.Off)
+                //{
+                //    if (!isTutorialActive)
+                //    {
 
-                        StartCoroutine(ShowTutorialThenDeactivate(player2_cursor));
-                    }
-                    //SetActiveStandbyScreen(false);
-                    //SetActivePlayer(player2_cursor);
+                //        StartCoroutine(ShowTutorialThenDeactivate(player2_cursor));
+                //    }
+                //    //SetActiveStandbyScreen(false);
+                //    //SetActivePlayer(player2_cursor);
 
-                }
-                else
-                {
+                //}
+                //else
+                //}
+                //{
                     SetActiveStandbyScreen(false);
                     SetActivePlayer(player2_cursor);
-                }
             }
           
           
