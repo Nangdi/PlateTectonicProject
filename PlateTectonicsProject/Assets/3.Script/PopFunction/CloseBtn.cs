@@ -7,6 +7,8 @@ using static PlusButton;
 public class CloseBtn : MonoBehaviour, IPointerClickHandler ,IPointerEnterHandler
 {
     [SerializeField] private PlusButton plusButton;
+
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         AudioManager.instance.Play("enterBtn");
@@ -17,6 +19,7 @@ public class CloseBtn : MonoBehaviour, IPointerClickHandler ,IPointerEnterHandle
     public void OnPointerClick(PointerEventData eventData)
     {
         plusButton.SetExplanationUI(false);
+        AudioManager.instance.Play("click");
         plusButton.currentCursor.UpdateCursorState(ActionState.Idle);
     }
 }

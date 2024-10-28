@@ -5246,9 +5246,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leapServiceProvider: {fileID: 191788311}
-  OffTime: 20
+  OffTime: 30
   timer: 0
-  actionState: 0
+  actionState: 3
   playerNum: 1
   cursorObject: {fileID: 902520980}
   raycaster: {fileID: 591147004}
@@ -7471,9 +7471,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leapServiceProvider: {fileID: 317231800}
-  OffTime: 20
+  OffTime: 30
   timer: 0
-  actionState: 0
+  actionState: 3
   playerNum: 0
   cursorObject: {fileID: 1299543550}
   raycaster: {fileID: 591147004}

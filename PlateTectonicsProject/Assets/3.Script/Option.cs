@@ -32,8 +32,8 @@ public class Option : MonoBehaviour
         player1_cursor.handStability = player2_cursor.handStability = handStabilityBar.value = DeviceSettingManager.instance.jsondata.handStability;
         player1_cursor.motionSensitivity = player2_cursor.motionSensitivity = motionSensitivityBar.value = DeviceSettingManager.instance.jsondata.motionSensitivity;
 
-        //Cursor.visible = false; // 마우스 커서 숨김
-        //Cursor.lockState = CursorLockMode.Locked; // 커서를 화면 중앙에 고정
+        Cursor.visible = false; // 마우스 커서 숨김
+        Cursor.lockState = CursorLockMode.Locked; // 커서를 화면 중앙에 고정
     }
 
     public void Update()
