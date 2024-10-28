@@ -25,7 +25,7 @@ public class ExplanationPanel : MonoBehaviour
     private void OnEnable()
     {
         btn.ReadySimulrator(false);
-
+        btn.okOb.SetActive(false);
         if (priorityIndex == 3)
         {
             priorityIndex = 2;
