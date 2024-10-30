@@ -48,13 +48,13 @@ public class VideoController : MonoBehaviour
         videoPlayer.Stop(); // 현재 비디오 정지
         
         //컨텐츠 교체
-        StartCoroutine( PlayNextVideo()); // 다음 비디오 재생
+        //StartCoroutine( PlayNextVideo()); // 다음 비디오 재생
+        StartCoroutine(PlayNextVideo());
     }
 
     private IEnumerator PlayNextVideo()
     {
-     
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2);
         changeColorUIByPlayerNum.contents.gameObject.SetActive(false);
         changeColorUIByPlayerNum.videoContents.gameObject.SetActive(true);
         videoPlayer.clip = nextVideo;
@@ -65,7 +65,10 @@ public class VideoController : MonoBehaviour
     private void PlayPreviusVideo()
     {
         videoPlayer.clip = previusVideo;
-        videoPlayer.playbackSpeed = 0.5f;
+        //클립 길이를 12초로 통일하기위한 식 배속 = 1(기존배속) / (목표길이 / 현재클립길이)
+        float playSpeed =1/( 12 / (float)videoPlayer.clip.length);
+        videoPlayer.playbackSpeed = playSpeed;
+        Debug.Log(videoPlayer.clip.length );
         // 다음 비디오 재생
         videoPlayer.Pause();
     }

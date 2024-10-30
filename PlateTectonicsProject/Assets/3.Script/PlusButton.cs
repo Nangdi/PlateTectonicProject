@@ -206,7 +206,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         videoController.PlayVideo();
         float soundLength = (float)videoController.videoPlayer.length * 2;
-        Debug.Log((float)videoController.videoPlayer.length *2);
+        Debug.Log($"{transform.parent.name} :  {(float)videoController.videoPlayer.length *2}");
 
         groundSound = AudioManager.instance.PlaySound("groundMove", soundLength);
     }
