@@ -302,14 +302,15 @@ public class LeapMouseCursor : MonoBehaviour
 
         // 두 손 사이의 거리 계산
         float currentDistance = Vector3.Distance(leftHandPosition, rightHandPosition);  // ZoomIn/ZoomOut
-        float currentYDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);    // HandsMoveUpDown
+        float currentZDistance = Mathf.Abs(leftHandPosition.z - rightHandPosition.z);    // HandsMoveUpDown
+        float currentYDistance = Mathf.Abs(leftHandPosition.y - rightHandPosition.y);  // ZoomIn/ZoomOut
 
         // motionSensitivity에 따른 거리 민감도 조정
         motiondistance = 0.01f + (0.03f * motionSensitivity);
 
         // 두 손의 거리 차이 계산 (현재 거리와 이전 거리의 차이)
         float distanceDelta = currentDistance - previousDistance;
-        float yDistanceDelta = currentYDistance - previousYDistance;
+        float ZDistanceDelta = currentZDistance - previousYDistance;
 
         // 거리 변화량을 누적
         //cumulativeDistance += Mathf.Abs(distanceDelta);
@@ -340,9 +341,9 @@ public class LeapMouseCursor : MonoBehaviour
                     break;
 
                 case PlusButton.HandAction.HandsMoveUpDown:  // 손이 위아래로 멀어질 때 : 보존
-                    if (currentYDistance > 0.1+ ((0.3-0.1)*motionSensitivity) )
+                    if ((currentZDistance > 0.1+ ((0.3-0.1)*motionSensitivity)) || (currentYDistance > 0.1 + ((0.3 - 0.1) * motionSensitivity)))
                     {
-                        Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentYDistance - previousYDistance));
+                        Debug.Log("보존형 경계 : 손이 위아래로 멀어짐 : " + (currentZDistance - previousYDistance));
                         SimulationPlay();
                         cumulativeYDistance = 0f;  // 누적 Y축 거리 초기화
                     }
@@ -352,7 +353,7 @@ public class LeapMouseCursor : MonoBehaviour
 
         // 현재 거리를 이전 거리로 업데이트
         previousDistance = currentDistance;
-        previousYDistance = currentYDistance;
+        previousYDistance = currentZDistance;
     }
 
     public void UpdateCursorState(ActionState state)
