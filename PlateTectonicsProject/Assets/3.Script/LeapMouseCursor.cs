@@ -380,6 +380,7 @@ public class LeapMouseCursor : MonoBehaviour
     //시뮬레이션 종료후 부르는 비디오판넬 
     public void SimulationPlay()
     {
+        cursorImage.DOFade(1, 0);
         UpdateCursorState(ActionState.playback);
         IsHandsInitialized = false;
         lastbtn.PlaySimulrator();

@@ -45,13 +45,13 @@ public class SceneManager : MonoBehaviour
                     //SetActivePlayer(player1_cursor);
 
                 }
-                else
-                {
-                    SetActiveStandbyScreen(false);
-                    SetActivePlayer(player1_cursor);
-                }
-                //SetActiveStandbyScreen(false);
-                //SetActivePlayer(player1_cursor);
+                //else
+                //{
+                //    SetActiveStandbyScreen(false);
+                //    SetActivePlayer(player1_cursor);
+                //}
+                SetActiveStandbyScreen(false);
+                SetActivePlayer(player1_cursor);
             }
         }
         if (frame2.Hands.Count > 0 )
@@ -69,14 +69,14 @@ public class SceneManager : MonoBehaviour
                     //SetActivePlayer(player2_cursor);
 
                 }
-                else
-                {
+                //else
+                //{
 
-                    SetActiveStandbyScreen(false);
-                    SetActivePlayer(player2_cursor);
-                } 
-                //SetActiveStandbyScreen(false);
-                //SetActivePlayer(player2_cursor);
+                //    SetActiveStandbyScreen(false);
+                //    SetActivePlayer(player2_cursor);
+                //} 
+                SetActiveStandbyScreen(false);
+                SetActivePlayer(player2_cursor);
             }
           
           
