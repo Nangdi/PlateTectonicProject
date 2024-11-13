@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,5 +22,6 @@ public class CloseBtn : MonoBehaviour, IPointerClickHandler ,IPointerEnterHandle
         plusButton.SetExplanationUI(false);
         AudioManager.instance.Play("click");
         plusButton.currentCursor.UpdateCursorState(ActionState.Idle);
+        plusButton.currentCursor.cursorImage.DOFade(1, 0);
     }
 }
