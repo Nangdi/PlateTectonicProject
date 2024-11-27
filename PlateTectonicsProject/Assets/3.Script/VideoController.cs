@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.Video;
 
 public class VideoController : MonoBehaviour
@@ -8,12 +9,13 @@ public class VideoController : MonoBehaviour
     public VideoPlayer videoPlayer; // 비디오 플레이어 참조
     public VideoClip nextVideo; // 다음 비디오 클립 참조
     public VideoClip previusVideo; // 다음 비디오 클립 참조
+    [SerializeField]
+    private VideoTimer videoTimer;
 
     [SerializeField]
     private ExplanationPanel explanationPanel;
     private ChangeColorUIByPlayerNum changeColorUIByPlayerNum;
     private int videoCount =0;
-
     void Start()
     {
         changeColorUIByPlayerNum = explanationPanel.GetComponent<ChangeColorUIByPlayerNum>();
@@ -30,6 +32,7 @@ public class VideoController : MonoBehaviour
     {
         // 비디오 재생
         videoPlayer.Play();
+        videoTimer.isPlay = true;
 
         // 비디오가 끝날 때 호출될 이벤트 추가
         videoPlayer.loopPointReached += OnVideoEnd;
@@ -46,19 +49,23 @@ public class VideoController : MonoBehaviour
         }
         // 비디오 끝났을 때 호출
         videoPlayer.Stop(); // 현재 비디오 정지
-        
+
         //컨텐츠 교체
         //StartCoroutine( PlayNextVideo()); // 다음 비디오 재생
-        StartCoroutine(PlayNextVideo());
+        //StartCoroutine(PlayNextVideo());
+        PlayNextVideo();
     }
 
-    private IEnumerator PlayNextVideo()
+    private void PlayNextVideo()
     {
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(2);
         changeColorUIByPlayerNum.contents.gameObject.SetActive(false);
         changeColorUIByPlayerNum.videoContents.gameObject.SetActive(true);
         videoPlayer.clip = nextVideo;
-        videoPlayer.playbackSpeed = 1f;
+        
+        videoPlayer.playbackSpeed = SetVideoLenght(15);
+        videoTimer.SetTimer(15);
+        
         // 다음 비디오 재생
         videoPlayer.Play();
     }
@@ -66,8 +73,8 @@ public class VideoController : MonoBehaviour
     {
         videoPlayer.clip = previusVideo;
         //클립 길이를 12초로 통일하기위한 식 배속 = 1(기존배속) / (목표길이 / 현재클립길이)
-        float playSpeed =1/( 12 / (float)videoPlayer.clip.length);
-        videoPlayer.playbackSpeed = playSpeed;
+        videoPlayer.playbackSpeed = SetVideoLenght(10);
+        videoTimer.SetTimer(10);
         Debug.Log(videoPlayer.clip.length );
         // 다음 비디오 재생
         videoPlayer.Pause();
@@ -76,6 +83,12 @@ public class VideoController : MonoBehaviour
     {
 
         PlayPreviusVideo();
+        videoTimer.isPlay = false;
         videoPlayer.loopPointReached -= OnVideoEnd;
+    }
+    private float SetVideoLenght(float lenght)
+    {
+        float playSpeed = 1 / (lenght / (float)videoPlayer.clip.length);
+        return playSpeed;
     }
 }

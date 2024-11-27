@@ -31,6 +31,7 @@ public class OKPanel : MonoBehaviour
         plusButton.VideoStart();
         transform.DOScale(0, 0);
     }
+
     private void OpenAni()
     {
         transform.DOScale(1, 1).SetEase(Ease.OutElastic);
