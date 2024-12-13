@@ -63,6 +63,7 @@ public class LanguageManager : MonoBehaviour
         for (int i = 0; i < images.Length; i++)
         {
             images[i].sprite = selectLanguage[i];
+            //images[i].SetNativeSize();
         }
     }
 }

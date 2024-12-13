@@ -1,6 +1,7 @@
 using LeapInternal;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,8 +37,16 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
     [SerializeField]
     private Sprite[] hands = new Sprite[2];
 
-    private void Awake()
+    [SerializeField]
+    private Material[] playerColors;
+
+    [SerializeField]
+    private GameObject line;
+    private LineRenderer lineRenderer;
+
+    private void Start()
     {
+        lineRenderer = line.transform.GetComponent<LineRenderer>();
     }
 
     [SerializeField]
@@ -49,12 +58,21 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
         //background.sprite = platePanel[(int)btn.plateNum];
         //contents.sprite = plateContents[(int)btn.plateNum];
         //videoContents.sprite = EXContents[(int)btn.plateNum];
+        ApplyPlayerSettings((int)btn.currentCursor.playerNum);
         contents.gameObject.SetActive(true);
         videoContents.gameObject.SetActive(false);
+       
+        //videoName.sprite = NameColors[(int)btn.currentCursor.playerNum][(int)btn.plateNum];
+    }
+    private void ApplyPlayerSettings(int playerNum)
+    {
+        //라인Material바꾸기
+        lineRenderer.material = playerColors[playerNum];
+        //손 맞는 색의 스프라이트로 껴주기
         for (int i = 0; i < handImages.Length; i++)
         {
-            handImages[i].sprite = hands[(int)btn.currentCursor.playerNum];
+            handImages[i].sprite = hands[playerNum];
         }
-        //videoName.sprite = NameColors[(int)btn.currentCursor.playerNum][(int)btn.plateNum];
+        //패널도 바꾸기
     }
 }
