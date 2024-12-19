@@ -359,7 +359,7 @@ public class LeapMouseCursor : MonoBehaviour
     public void UpdateCursorState(ActionState state)
     {
         actionState = state;
-        gudie.UpdateGuideText();
+        //gudie.UpdateGuideText();
     }
 
     IEnumerator InitializeHands(Hand leftHand, Hand rightHand)
