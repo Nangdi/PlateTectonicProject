@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class VideoController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class VideoController : MonoBehaviour
     public VideoClip previusVideo; // 다음 비디오 클립 참조
     [SerializeField]
     private VideoTimer videoTimer;
+    [SerializeField]
+    private RectTransform rawImage;
 
     [SerializeField]
     private ExplanationPanel explanationPanel;
@@ -64,6 +67,7 @@ public class VideoController : MonoBehaviour
         videoPlayer.clip = nextVideo;
         
         videoPlayer.playbackSpeed = SetVideoLenght(15);
+        rawImage.localScale = new Vector3(2, 2, 2);
         videoTimer.SetTimer(15);
         
         // 다음 비디오 재생
@@ -74,6 +78,7 @@ public class VideoController : MonoBehaviour
         videoPlayer.clip = previusVideo;
         //클립 길이를 12초로 통일하기위한 식 배속 = 1(기존배속) / (목표길이 / 현재클립길이)
         videoPlayer.playbackSpeed = SetVideoLenght(10);
+        rawImage.localScale = new Vector3(3, 3, 3);
         videoTimer.SetTimer(10);
         Debug.Log(videoPlayer.clip.length );
         // 다음 비디오 재생

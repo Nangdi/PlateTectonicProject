@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using static UnityEditor.Progress;
 public class ArrowLanuageController : MonoBehaviour
 {
     [SerializeField]
@@ -54,6 +53,6 @@ public class ArrowLanuageController : MonoBehaviour
         InitDicData("인도판", " India Plate");
         InitDicData("필리핀판", "Philippine Plate");
         InitDicData("English", "한국어");
-        InitDicData("잠시후 체험이 시작 됩니다.", "The experience will begin soon.");
+        InitDicData("체험이 곧 시작 됩니다.", "The experience will begin soon.");
     } 
 }

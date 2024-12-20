@@ -22,12 +22,16 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
     private Sprite[] plateContents = new Sprite[7]; //0 Player1 , 1 Player2
     [SerializeField]
     private Sprite[] EXContents = new Sprite[7]; //0 Player1 , 1 Player2
+    [SerializeField]
+    private Sprite[] Windows; //0 Player1 , 1 Player2
+    [SerializeField]
+    private Transform[] panelPos; //0 Player1 , 1 Player2
     //[SerializeField]
     //private Sprite[] plateContents = new Sprite[7];
     //[SerializeField]
     //private Sprite[] plateName = new Sprite[7];
     [SerializeField]
-    private UnityEngine.UI.Image background;
+    private UnityEngine.UI.Image Window;
     [SerializeField]
     public UnityEngine.UI.Image videoContents;
     [SerializeField]
@@ -58,7 +62,19 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
         //background.sprite = platePanel[(int)btn.plateNum];
         //contents.sprite = plateContents[(int)btn.plateNum];
         //videoContents.sprite = EXContents[(int)btn.plateNum];
-        ApplyPlayerSettings((int)btn.currentCursor.playerNum);
+        //1p 2p 각각뜨게하는 코드
+        if (btn.currentCursor == null)
+        {
+            ApplyPlayerSettings(0);
+
+        }
+        else
+        {
+            ApplyPlayerSettings((int)btn.currentCursor.playerNum);
+
+        }
+        //ApplyPlayerSettings((int)btn.currentCursor.playerNum);
+
         contents.gameObject.SetActive(true);
         videoContents.gameObject.SetActive(false);
        
@@ -66,6 +82,7 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
     }
     private void ApplyPlayerSettings(int playerNum)
     {
+        transform.position = panelPos[playerNum].position;
         //라인Material바꾸기
         lineRenderer.material = playerColors[playerNum];
         //손 맞는 색의 스프라이트로 껴주기
@@ -73,6 +90,9 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
         {
             handImages[i].sprite = hands[playerNum];
         }
+
         //패널도 바꾸기
+        Window.sprite = Windows[playerNum];
+       
     }
 }

@@ -9,7 +9,7 @@ public class MoveInCircle : MonoBehaviour
     public Transform Center;
     private void Start()
     {
-        playMoveInCircle(Center.position, 20, 3);
+        playMoveInCircle(Center.position, 0.5f, 3);
     }
     void playMoveInCircle( Vector3 center, float radius, float duration)
     {
@@ -22,7 +22,7 @@ public class MoveInCircle : MonoBehaviour
             float y = Mathf.Sin(rad) * radius;
 
             // 오브젝트 위치 설정
-            transform.position = new Vector3(center.x + x, center.y + y, transform.position.z);
+            transform.position = new Vector3(center.x +x/5, center.y + y, transform.position.z);
         }, 360f, duration).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart); // 무한 루프
     }
 }

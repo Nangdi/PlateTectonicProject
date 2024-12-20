@@ -19,7 +19,7 @@ public class UIOpen : MonoBehaviour
     }
     private void OnEnable()
     {
-        transform.DOScale(1.15f, 0.3f).SetEase(Ease.OutCirc).OnComplete(() => { AABBCollisionResolve.Instance.CheckOverLab(); });
+        transform.DOScale(1.1f, 0.3f).SetEase(Ease.OutCirc).OnComplete(() => { AABBCollisionResolve.Instance.CheckOverLab(); });
         //transform.DOMove(tartgetTransform.position, 0.3f).SetEase(Ease.OutCirc).OnComplete(() =>  AABBCollisionResolve.Instance.CheckOverLab());
     }
     private void OnDisable()

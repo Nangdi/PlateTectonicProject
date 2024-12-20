@@ -141,7 +141,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 1666, y: 3}
     spritePosition: {x: 1104, y: 1224}
-  - name: h03-2
+  - name: Idle_2P
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -162,7 +162,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 1490, y: 805}
     spritePosition: {x: 2406, y: 358}
-  - name: h03-1
+  - name: idle_1P
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -204,14 +204,14 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 1768, y: 805}
     spritePosition: {x: 2130, y: 358}
-  - name: h02-2
+  - name: Select_2P
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 1329
+      x: 1337
       y: 4
       width: 105
       height: 168
@@ -225,7 +225,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 1329, y: 4}
     spritePosition: {x: 2005, y: 358}
-  - name: h02-1
+  - name: Select_1P
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
