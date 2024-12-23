@@ -47,14 +47,14 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
     [SerializeField]
     private GameObject line;
     private LineRenderer lineRenderer;
+    [SerializeField]
+    private PlusButton btn;
 
-    private void Start()
+    private void Awake()
     {
         lineRenderer = line.transform.GetComponent<LineRenderer>();
     }
 
-    [SerializeField]
-    private PlusButton btn;
     private void OnEnable()
     {
         //background.sprite = playerBackColor[(int)btn.currentCursor.playerNum];
@@ -62,18 +62,8 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
         //background.sprite = platePanel[(int)btn.plateNum];
         //contents.sprite = plateContents[(int)btn.plateNum];
         //videoContents.sprite = EXContents[(int)btn.plateNum];
-        //1p 2p 각각뜨게하는 코드
-        if (btn.currentCursor == null)
-        {
-            ApplyPlayerSettings(0);
-
-        }
-        else
-        {
-            ApplyPlayerSettings((int)btn.currentCursor.playerNum);
-
-        }
-        //ApplyPlayerSettings((int)btn.currentCursor.playerNum);
+     
+        ApplyPlayerSettings((int)btn.currentCursor.playerNum);
 
         contents.gameObject.SetActive(true);
         videoContents.gameObject.SetActive(false);
@@ -82,9 +72,8 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
     }
     private void ApplyPlayerSettings(int playerNum)
     {
-        transform.position = panelPos[playerNum].position;
+        //transform.position = panelPos[playerNum].position;
         //라인Material바꾸기
-        lineRenderer.material = playerColors[playerNum];
         //손 맞는 색의 스프라이트로 껴주기
         for (int i = 0; i < handImages.Length; i++)
         {
@@ -93,6 +82,7 @@ public class ChangeColorUIByPlayerNum : MonoBehaviour
 
         //패널도 바꾸기
         Window.sprite = Windows[playerNum];
+        lineRenderer.material = playerColors[playerNum]; 
        
     }
 }

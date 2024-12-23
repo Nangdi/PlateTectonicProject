@@ -9,7 +9,7 @@ public class MoveInCircle : MonoBehaviour
     public Transform Center;
     private void Start()
     {
-        playMoveInCircle(Center.position, 0.5f, 3);
+        playMoveInCircle(Center.position, 100f, 3);
     }
     void playMoveInCircle( Vector3 center, float radius, float duration)
     {

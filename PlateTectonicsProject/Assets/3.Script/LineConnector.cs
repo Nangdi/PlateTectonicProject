@@ -7,10 +7,6 @@ public class LineConnector : MonoBehaviour
     public RectTransform buttonTransform; // 버튼의 Transform
     public RectTransform panelTransform;  // 패널의 Transform
     private LineRenderer lineRenderer;
-    private void OnEnable()
-    {
-        SetLineColor(Color.red, Color.red); 
-    }
     void Start()
     {
 
