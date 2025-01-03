@@ -158,6 +158,7 @@ public class LeapMouseCursor : MonoBehaviour
                 {
                     lastbtn.SetExplanationUI(false);
                     lastbtn.videoUI.SetActive(false);
+                    cursorImage.DOFade(1, 0);
                 }
 
                 UpdateCursorState(ActionState.Off);

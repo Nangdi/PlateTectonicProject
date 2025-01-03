@@ -281,7 +281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &688640215719780919
 RectTransform:
   m_ObjectHideFlags: 0
@@ -357,6 +357,7 @@ MonoBehaviour:
   btn: {fileID: 0}
   videoPanel: {fileID: 7716980392559215321}
   VideoPlayer: {fileID: 4154168250572277001}
+  priorityIndex: 0
 --- !u!1 &2775286428225912320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,7 +1027,6 @@ RectTransform:
   m_Children:
   - {fileID: 7921650406819576865}
   - {fileID: 7522064024681753488}
-  - {fileID: 5558350547219569131}
   - {fileID: 688640215719780919}
   - {fileID: 4000609948410980783}
   m_Father: {fileID: 0}
@@ -1147,12 +1147,20 @@ MonoBehaviour:
   plateNum: 0
   nameUI: {fileID: 110667553890201918}
   ExplanationUI: {fileID: 2496073766961617472}
+  videoUI: {fileID: 0}
   interaction: {fileID: 0}
   players: []
   currentCursor: {fileID: 0}
   mouseCursor: {fileID: 0}
-  video: {fileID: 0}
+  videoRoot: {fileID: 0}
   effects: []
+  accentControl: {fileID: 0}
+  videoController: {fileID: 0}
+  particlePos: {fileID: 0}
+  groundSound: {fileID: 0}
+  unReadyImage: {fileID: 0}
+  ReadyImage: {fileID: 0}
+  okOb: {fileID: 0}
 --- !u!212 &1494498088354290151
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1581,11 +1589,11 @@ Transform:
   m_GameObject: {fileID: 8138698204066738686}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -216.11646, y: 175.63513, z: -1.058606}
+  m_LocalPosition: {x: -216.11646, y: 7.635132, z: -1.058606}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 614531060439451525}
+  m_Father: {fileID: 7522064024681753488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8634316857945239947
 GameObject:
@@ -1753,6 +1761,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4981814428476099678}
+  - {fileID: 5558350547219569131}
   m_Father: {fileID: 614531060439451525}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1813,3 +1822,4 @@ MonoBehaviour:
   btn: {fileID: 0}
   videoPanel: {fileID: 0}
   VideoPlayer: {fileID: 0}
+  priorityIndex: 0

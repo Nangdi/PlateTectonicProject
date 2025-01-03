@@ -98,6 +98,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (Input.GetKeyDown(KeyCode.E))
         {
             accentControl.PlayAccent();
+            SetExplanationUI(true);
 
         }
         if (Input.GetKeyDown(KeyCode.R))
@@ -179,7 +180,7 @@ public class PlusButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         //여기서 화살표 켜주기? or 설명판넬 닫힐때 켜주기 or 두손이 모두 인식됐을때 화살표 켜주기 
 
         accentControl.PlayAccent();
-        //SetExplanationUI(true);
+        SetExplanationUI(true);
         // 설명패널키는 메소드 => AccentControll에서 ani끝난후 켜짐
         //이전버튼의 players에서 나를 지워줘야함
 

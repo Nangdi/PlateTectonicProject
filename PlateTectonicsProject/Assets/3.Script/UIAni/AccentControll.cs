@@ -74,7 +74,7 @@ public class AccentControll : MonoBehaviour
         //gameObject.SetActive(false);
         //todo 화살표 Acrive 켜주기
       
-        plusBtn.SetExplanationUI(true);
+        //plusBtn.SetExplanationUI(true);
         //plusBtn.currentCursor.cursorImage.DOFade(0, 0);
     }
     private void OnDisable()
