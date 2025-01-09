@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.UI.Image;
 
 public class ArrowMove : MonoBehaviour
@@ -10,7 +11,7 @@ public class ArrowMove : MonoBehaviour
     private RectTransform rectTransform;
     public Tween moveTween;
     public float moveDistance = 15f;
-    public float moveCycle = 3f;
+    public float moveCycle ;
     public bool isAutoDir = true;
     public Vector3 dir = Vector2.right;
     private Vector3 originPos;
@@ -18,6 +19,10 @@ public class ArrowMove : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         originPos = transform.localPosition;
+        //if(moveTween != null)
+        //{
+        //    DOTween.Kill(moveTween);
+        //}
         if (isAutoDir)
         {
             AutoMoveArrow();

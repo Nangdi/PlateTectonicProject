@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 7333612266956955954}
   - component: {fileID: 2955355546864376712}
   - component: {fileID: 7461037740173340857}
-  - component: {fileID: 9140115969381700795}
+  - component: {fileID: 555358752641671630}
   m_Layer: 5
   m_Name: LeftHand
   m_TagString: Untagged
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &9140115969381700795
+--- !u!114 &555358752641671630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,13 +291,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 371547526384694021}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8710682c333abfb4a8763e12d6fd594e, type: 3}
+  m_Script: {fileID: 11500000, guid: a3d6c623c80c36e49a71674bf56902eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 100
   moveCycle: 1.5
-  isAutoDir: 0
-  dir: {x: 1, y: 0, z: 0}
+  dir: {x: 0, y: 0, z: 0}
 --- !u!1 &452055952754471001
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +740,7 @@ GameObject:
   - component: {fileID: 3196802553736531651}
   - component: {fileID: 7161256577637429747}
   - component: {fileID: 1265022545770297001}
-  - component: {fileID: 722659983034958283}
+  - component: {fileID: 7690482491800084769}
   m_Layer: 5
   m_Name: RightHand
   m_TagString: Untagged
@@ -806,7 +805,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &722659983034958283
+--- !u!114 &7690482491800084769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -815,13 +814,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1151400784234071787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8710682c333abfb4a8763e12d6fd594e, type: 3}
+  m_Script: {fileID: 11500000, guid: a3d6c623c80c36e49a71674bf56902eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveDistance: 100
   moveCycle: 1.5
-  isAutoDir: 0
-  dir: {x: -1, y: 0, z: 0}
+  dir: {x: 0, y: 0, z: 0}
 --- !u!1 &1218662413975834519
 GameObject:
   m_ObjectHideFlags: 0

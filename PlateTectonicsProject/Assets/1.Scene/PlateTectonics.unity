@@ -635,6 +635,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 325
       objectReference: {fileID: 0}
+    - target: {fileID: 555358752641671630, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 890767102976509859, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_text
       value: "\uD0DC\uD3C9\uC591\uD310"
@@ -1082,6 +1086,10 @@ PrefabInstance:
     - target: {fileID: 7659269920897268604, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_text
       value: "\uC720\uB77C\uC2DC\uC544\uD310"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7690482491800084769, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7918595606759717826, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: panelPos.Array.size
@@ -2536,6 +2544,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 58
       objectReference: {fileID: 0}
+    - target: {fileID: 555358752641671630, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 890767102976509859, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_text
       value: "\uC778\uB3C4\uD310"
@@ -2968,6 +2980,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC720\uB77C\uC2DC\uC544\uD310"
       objectReference: {fileID: 0}
+    - target: {fileID: 7690482491800084769, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7918595606759717826, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: panelPos.Array.size
       value: 2
@@ -3390,6 +3406,10 @@ PrefabInstance:
     - target: {fileID: 185695885851488934, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 142
+      objectReference: {fileID: 0}
+    - target: {fileID: 555358752641671630, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 657964068049370716, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3847,6 +3867,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uBD81\uC544\uD504\uB9AC\uCE74\uD310"
       objectReference: {fileID: 0}
+    - target: {fileID: 7690482491800084769, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7918595606759717826, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: panelPos.Array.size
       value: 2
@@ -4136,6 +4160,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 452055952754471001, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 555358752641671630, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 890767102976509859, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
@@ -4577,6 +4605,10 @@ PrefabInstance:
     - target: {fileID: 7659269920897268604, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_text
       value: "\uD544\uB9AC\uD540\uD310"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7690482491800084769, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7918595606759717826, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: panelPos.Array.size
@@ -5138,6 +5170,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 555358752641671630, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 657964068049370716, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -5597,6 +5633,10 @@ PrefabInstance:
     - target: {fileID: 7659269920897268604, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_text
       value: "\uC544\uD504\uB9AC\uCE74\uD310"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7690482491800084769, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7918595606759717826, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: panelPos.Array.size
@@ -6579,6 +6619,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 121.515
       objectReference: {fileID: 0}
+    - target: {fileID: 555358752641671630, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 657964068049370716, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_SizeDelta.x
       value: 308
@@ -7194,6 +7238,10 @@ PrefabInstance:
     - target: {fileID: 7659269920897268604, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_text
       value: "\uBD81\uC544\uBA54\uB9AC\uCE74\uD310"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7690482491800084769, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7918595606759717826, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: panelPos.Array.size
@@ -8398,7 +8446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leapServiceProvider: {fileID: 317231800}
-  OffTime: 301111
+  OffTime: 30
   timer: 0
   actionState: 3
   playerNum: 0
@@ -9544,6 +9592,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 555358752641671630, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 890767102976509859, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_text
       value: "\uB098\uC2A4\uCE74\uD310"
@@ -9935,6 +9987,10 @@ PrefabInstance:
     - target: {fileID: 7659269920897268604, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: m_text
       value: "\uB0A8\uC544\uD504\uB9AC\uCE74\uD310"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7690482491800084769, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
+      propertyPath: dir.x
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7918595606759717826, guid: 9d21efb052b770c43b4eb61aed52ee70, type: 3}
       propertyPath: panelPos.Array.size
