@@ -126,10 +126,10 @@ public class LeapMouseCursor : MonoBehaviour
             else
             {
                 IsHandsInitialized = false;
+                    cursorImage.DOFade(1, 0);
                 if (lastbtn != null && actionState == ActionState.Select)
                 {
                     lastbtn.ReadySimulrator(false);
-                    cursorImage.DOFade(1, 0);
                 }
             }
 
